@@ -1,0 +1,2 @@
+# cointest
+test for coin
