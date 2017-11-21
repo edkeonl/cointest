@@ -2,7 +2,6 @@
 
 import requests
 import urllib.request, urllib.parse, urllib.error
-from bs4 import BeautifulSoup
 import time
 from datetime import date
 
@@ -27,7 +26,7 @@ def webhook():
     res = processRequest(req)
 
     res = json.dumps(res, indent=4)
-    # print(res)
+    print(res)
     r = make_response(res)
     r.headers['Content-Type'] = 'application/json'
     return r
@@ -36,26 +35,48 @@ def webhook():
 def processRequest(req):
     if req.get("result").get("action") != "coin_change":
         return {}
+        
     baseurl = "https://api.coinmarketcap.com/v1/ticker/"
-    yql_query = makeYqlQuery(req)
+    yql_query = makeCoinQuery(req)
     if yql_query is None:
         return {}
-    yql_url = baseurl + coin_type + "/"
+    yql_url = baseurl + yql_query + "/"
     print(yql_url)
+    
+    r = requests.get(yql_url)
 
-    curr_price = requests.get(yql_url.url).json()
-    result = curr_price[0]['percent_change_24h']
-    #result = urllib.urlopen(yql_url).read()
+    curr_price = requests.get(r.url).json()
+    percent = curr_price[0]['percent_change_24h']
+
     print("yql result: ")
     print(result)
 
-    #data = json.loads(result)
-    #res = makeWebhookResult(data)
-    #return res
-    return result
+    speech = "hey i am a coin"
+    #speech = coin_type + "changed" + percent + "% within the last 24 hours"
+
+    print("Response:")
+    print(speech)
+    
+    #result = req.get("result")
+    #parameters = result.get("parameters")
+    #zone = parameters.get("shipping-zone")
+
+    #cost = {'Europe':100, 'North America':200, 'South America':300, 'Asia':400, 'Africa':500}
+
+    #speech = "The cost of shipping to " + zone + " is " + str(cost[zone]) + " euros."
+
+    return {
+        "speech": speech,
+        "displayText": speech,
+        #"data": {},
+        # "contextOut": [],
+        "source": "api-coinmarketcap"
+    }
+    
+    return res
 
 
-def makeYqlQuery(req):
+def makeCoinQuery(req):
     result = req.get("result")
     parameters = result.get("parameters")
     coin_type = parameters.get("cryptocurrency")
@@ -69,4 +90,4 @@ if __name__ == '__main__':
 
     print "Starting app on port %d" % port
 
-    app.run(debug=False, port=port, host='0.0.0.0')
+    app.run(debug=True, port=port, host='0.0.0.0')
