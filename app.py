@@ -23,24 +23,13 @@ def webhook():
     print("Request:")
     print(json.dumps(req, indent=4))
 
-    res = makeWebhookResult(req)
-
-    res = json.dumps(res, indent=4)
-    print(res)
-    r = make_response(res)
-    r.headers['Content-Type'] = 'application/json'
-    return r
-
-def makeWebhookResult(req):
     if req.get("result").get("action") != "coin_change":
         return {}
-    result = req.get("result")
-    parameters = result.get("parameters")
-    zone = parameters.get("cryptocurrency")
+    #result = req.get("result")
+    #parameters = result.get("parameters")
+    #zone = parameters.get("cryptocurrency")
 
-    cost = {'Europe':100, 'North America':200, 'South America':300, 'Asia':400, 'Africa':500}
-
-    speech = "The cost of shipping to "
+    speech = "I hope this works"
 
     print("Response:")
     print(speech)
@@ -53,6 +42,11 @@ def makeWebhookResult(req):
         "source": "apiai-onlinestore-shipping"
     }
 
+    res = json.dumps(res, indent=4)
+    print(res)
+    r = make_response(res)
+    r.headers['Content-Type'] = 'application/json'
+    return r
 
 if __name__ == '__main__':
     port = int(os.getenv('PORT', 5000))
