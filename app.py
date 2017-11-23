@@ -21,19 +21,19 @@ def webhook():
     res = makeWebhookResult(req)
 
     res = json.dumps(res, indent=4)
-    print(res)
+    #print(res)
     r = make_response(res)
     r.headers['Content-Type'] = 'application/json'
     return r
 
 def makeWebhookResult(req):
-    #if req.get("result").get("action") != "coin_change":
-    #    return {}
+    if req.get("result").get("action") != "coin_change":
+        return {}
     result = req.get("result")
     parameters = result.get("parameters")
-    zone = parameters.get("cryptocurrency")
+    coin = parameters.get("cryptocurrency")
 
-    speech = "I hope this works"
+    speech = "I hope this works" + coin 
 
     print("Response:")
     print(speech)
