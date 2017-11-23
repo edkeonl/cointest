@@ -18,6 +18,15 @@ def webhook():
     print("Request:")
     print(json.dumps(req, indent=4))
 
+    res = makeWebhookResult(req)
+
+    res = json.dumps(res, indent=4)
+    print(res)
+    r = make_response(res)
+    r.headers['Content-Type'] = 'application/json'
+    return r
+
+def makeWebhookResult(req):
     if req.get("result").get("action") != "coin_change":
         return {}
     result = req.get("result")
@@ -29,19 +38,13 @@ def webhook():
     print("Response:")
     print(speech)
 
-    res = {
+    return {
         "speech": speech,
         "displayText": speech,
         #"data": {},
         # "contextOut": [],
         "source": "apiai-slack-richformatting"
     }
-
-    res = json.dumps(res, indent=4)
-    print(res)
-    r = make_response(res)
-    r.headers['Content-Type'] = 'application/json'
-    return r
 
 if __name__ == '__main__':
     port = int(os.getenv('PORT', 5000))
