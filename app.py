@@ -26,9 +26,9 @@ def webhook():
 
     if req.get("result").get("action") != "coin_change":
         return {}
-    #result = req.get("result")
-    #parameters = result.get("parameters")
-    #zone = parameters.get("cryptocurrency")
+    result = req.get("result")
+    parameters = result.get("parameters")
+    zone = parameters.get("cryptocurrency")
 
     speech = "I hope this works"
 
