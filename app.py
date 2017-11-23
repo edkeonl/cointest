@@ -40,7 +40,7 @@ def webhook():
         "displayText": speech,
         #"data": {},
         # "contextOut": [],
-        "source": "apiai-onlinestore-shipping"
+        "source": "apiai-slack-richformatting"
     }
 
     res = json.dumps(res, indent=4)
