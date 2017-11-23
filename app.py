@@ -1,11 +1,6 @@
 #!/usr/bin/env python
 
-#import requests
 import urllib
-#urllib.request, urllib.parse, urllib.error
-#import time
-#from datetime import date
-
 import json
 import os
 
@@ -15,7 +10,6 @@ from flask import make_response
 
 # Flask app should start in global layout
 app = Flask(__name__)
-
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
@@ -35,7 +29,7 @@ def webhook():
     print("Response:")
     print(speech)
 
-    return {
+    {
         "speech": speech,
         "displayText": speech,
         #"data": {},
