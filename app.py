@@ -29,7 +29,7 @@ def webhook():
     print("Response:")
     print(speech)
 
-    {
+    res = {
         "speech": speech,
         "displayText": speech,
         #"data": {},
