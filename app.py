@@ -27,8 +27,8 @@ def webhook():
     return r
 
 def makeWebhookResult(req):
-    if req.get("result").get("action") != "coin_change":
-        return {}
+    #if req.get("result").get("action") != "coin_change":
+    #    return {}
     result = req.get("result")
     parameters = result.get("parameters")
     zone = parameters.get("cryptocurrency")
