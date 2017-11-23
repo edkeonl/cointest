@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 
-import requests
-import urllib, urllib.request, urllib.parse, urllib.error
-import time
-from datetime import date
+#import requests
+import urllib
+#urllib.request, urllib.parse, urllib.error
+#import time
+#from datetime import date
 
 import json
 import os
