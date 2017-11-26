@@ -26,13 +26,19 @@ def webhook():
         return {}
     result = req.get("result")
     parameters = result.get("parameters")
-    zone = parameters.get("cryptocurrency")
+    crypto = parameters.get("cryptocurrency")
 
     speech = "I hope this works"
 
     print("Response:")
     print(speech)
 
+    
+    res = json.dumps(res, indent=4)
+    print(res)
+    r = make_response(res)
+    r.headers['Content-Type'] = 'application/json'
+    #return r
     return {
         "speech": speech,
         "displayText": speech,
@@ -41,11 +47,6 @@ def webhook():
         "source": "apiai-slack-richformatting"
     }
 
-    res = json.dumps(res, indent=4)
-    print(res)
-    r = make_response(res)
-    r.headers['Content-Type'] = 'application/json'
-    return r
 
 if __name__ == '__main__':
     port = int(os.getenv('PORT', 5000))
