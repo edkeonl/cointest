@@ -20,11 +20,20 @@ def webhook():
 
     if req.get("result").get("action") != "coin_change":
         return {}
+    
+    baseurl = "https://api.coinmarketcap.com/v1/ticker/"
+    
     result = req.get("result")
     parameters = result.get("parameters")
-    crypto = parameters.get("cryptocurrency")
+    coin_type = parameters.get("cryptocurrency")
     
-    speech = "I hope this works"
+    coin_url = baseurl + coin_type
+    
+    b = requests.get(coin_url)
+    curr_price = requests.get(b.url).json()
+    percent = curr_price[0]['percent_change_24h']
+    
+    speech = coin_type + "changed" + percent + "% within the last 24 hours"
 
     print("Response:")
     print(speech)
@@ -42,7 +51,6 @@ def webhook():
     r = make_response(res)
     r.headers['Content-Type'] = 'application/json'
     return r
-
 
 if __name__ == '__main__':
     port = int(os.getenv('PORT', 5000))
