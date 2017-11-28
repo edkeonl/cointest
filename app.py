@@ -25,7 +25,7 @@ def webhook():
     parameters = result.get("parameters")
     crypto = parameters.get("cryptocurrency")
     
-    speech = "I hope this works"
+    speech = baseurl + crypto
 
     print("Response:")
     print(speech)
