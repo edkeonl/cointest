@@ -34,7 +34,7 @@ def webhook():
     #coin_price = str(data[0]['price_usd'])
 
     #speech = coin_name + " is currently " + coin_price + " US dollars"
-    #speech = "coin coin coin"
+    speech = "coin coin coin"
 
     print("Response:")
     print(speech)
