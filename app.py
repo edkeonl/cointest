@@ -30,8 +30,6 @@ def webhook():
     
     rr = requests.get(coin_url)
     #Json decoding
-    bitdata = rr.text
-    bitjson = json.loads(bitdata)
     jsonifed_resp = requests.get(rr.url).json()
 
     speech = jsonifed_resp[0]['id'] + " is currently " + jsonifed_resp[0]['price_usd'] + " US dollars"
