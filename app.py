@@ -20,6 +20,7 @@ def webhook():
 
     if req.get("result").get("action") != "coin_change":
         return {}
+    baseurl = "https://api.coinmarketcap.com/v1/ticker/"
     result = req.get("result")
     parameters = result.get("parameters")
     crypto = parameters.get("cryptocurrency")
