@@ -22,9 +22,9 @@ def webhook():
         return {}
     result = req.get("result")
     parameters = result.get("parameters")
-    crypto = parameters.get("cryptocurrency")
+    coin_type = parameters.get("cryptocurrency")
     
-    speech = "I hope this works"
+    speech = "coin coin coin"
 
     print("Response:")
     print(speech)
