@@ -32,7 +32,7 @@ def webhook():
     #Json decoding
     #bitdata = rr.text
     #bitjson = json.loads(bitdata)
-    jsonifed_resp = requests.get(coin_url.url).json()
+    jsonifed_resp = requests.get(coin_url).json()
     
     coin_name = str(jsonifed_resp[0]['id'])
     coin_price = str(jsonifed_resp[0]['price_usd'])
