@@ -26,7 +26,7 @@ def webhook():
     
     baseurl = "https://api.coinmarketcap.com/v1/ticker/"
     coin_url = baseurl + coin_type
-    #jsonifed_resp = requests.get(str(coin_url)).json()
+    jsonifed_resp = requests.get(str(coin_url)).json()
     
     #coin_name = str(jsonifed_resp[0]['id'])
     #coin_price = str(jsonifed_resp[0]['price_usd'])
