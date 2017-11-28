@@ -31,9 +31,10 @@ def webhook():
     
     b = requests.get(coin_url)
     curr_price = requests.get(b.url).json()
-    percent = curr_price[0]['percent_change_24h']
+    #percent = curr_price[0]['percent_change_24h']
     
-    speech = coin_type + "changed" + percent + "% within the last 24 hours"
+    speech = coin_type + "changed 24% within the last 24 hours"" 
+    #+ percent + "% within the last 24 hours"
 
     print("Response:")
     print(speech)
