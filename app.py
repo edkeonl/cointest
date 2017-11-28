@@ -32,7 +32,8 @@ def webhook():
     #Json decoding
     jsonifed_resp = requests.get(rr.url).json()
 
-    speech = jsonifed_resp[0]['id'] + " is currently " + jsonifed_resp[0]['price_usd'] + " US dollars"
+    speech = " is currently "
+    #jsonifed_resp[0]['id'] + " is currently " + jsonifed_resp[0]['price_usd'] + " US dollars"
     
     print("Response:")
     print(speech)
