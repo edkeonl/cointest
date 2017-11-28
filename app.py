@@ -21,13 +21,13 @@ def webhook():
     if req.get("result").get("action") != "coin_change":
         return {}
     
-    baseurl = "https://api.coinmarketcap.com/v1/ticker/"
+    #baseurl = "https://api.coinmarketcap.com/v1/ticker/"
     
     result = req.get("result")
     parameters = result.get("parameters")
     coin_type = parameters.get("cryptocurrency")
     
-    coin_url = baseurl + coin_type
+    #coin_url = baseurl + coin_type
     
     #b = requests.get(coin_url)
     #curr_price = requests.get(b.url).json()
