@@ -24,8 +24,8 @@ def webhook():
     parameters = result.get("parameters")
     coin_type = parameters.get("cryptocurrency")
     
-    #baseurl = "https://api.coinmarketcap.com/v1/ticker/"
-    #coin_url = baseurl + coin_type
+    baseurl = "https://api.coinmarketcap.com/v1/ticker/"
+    coin_url = baseurl + coin_type
     #jsonifed_resp = requests.get(coin_url).json()
     
     #coin_name = str(jsonifed_resp[0]['id'])
