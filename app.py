@@ -3,7 +3,6 @@
 import urllib
 import json
 import os
-import requests
 
 from flask import Flask
 from flask import request
@@ -21,21 +20,12 @@ def webhook():
 
     if req.get("result").get("action") != "coin_change":
         return {}
-    
     result = req.get("result")
     parameters = result.get("parameters")
-    coin_type = parameters.get("cryptocurrency")
+    crypto = parameters.get("cryptocurrency")
     
-    #baseurl = "https://api.coinmarketcap.com/v1/ticker/"
-    #coin_url = baseurl + coin_type
-    #jsonifed_resp = requests.get(coin_url).json()
-    
-    #coin_name = str(jsonifed_resp[0]['id'])
-    #coin_price = str(jsonifed_resp[0]['price_usd'])
+    speech = "I hope this works"
 
-    #speech = coin_name + " is currently " + coin_price + " US dollars"
-    speech = "coin coin coin"
-    
     print("Response:")
     print(speech)
     
