@@ -24,16 +24,20 @@ def webhook():
     baseurl = "https://api.coinmarketcap.com/v1/ticker/"
     result = req.get("result")
     parameters = result.get("parameters")
-    crypto = parameters.get("cryptocurrency")
+    coin_type = parameters.get("cryptocurrency")
     
-    coin_url = baseurl + "bitcoin"
+    coin_url = baseurl + coin_type
     
-    rr = requests.get(coin_url)
+    #rr = requests.get(coin_url)
     #Json decoding
-    jsonifed_resp = requests.get(rr.url).json()
+    #bitdata = rr.text
+    #bitjson = json.loads(bitdata)
+    jsonifed_resp = requests.get(coin_url.url).json()
+    
+    coin_name = jsonifed_resp[0]['id']
+    coin_price = jsonifed_resp[0]['price_usd']
 
-    speech = " is currently "
-    #jsonifed_resp[0]['id'] + " is currently " + jsonifed_resp[0]['price_usd'] + " US dollars"
+    speech = coin_name + " is currently " + coin_price + " US dollars"
     
     print("Response:")
     print(speech)
