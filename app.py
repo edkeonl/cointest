@@ -25,8 +25,16 @@ def webhook():
     parameters = result.get("parameters")
     crypto = parameters.get("cryptocurrency")
     
-    speech = baseurl + crypto
+    coin_url = baseurl + crypto
+    
+    rr = requests.get(coin_url)
+    #Json decoding
+    bitdata = r.text
+    bitjson = json.loads(bitdata)
+    jsonifed_resp = requests.get(r.url).json()
 
+    speech = jsonifed_resp[0]['id'] + " is currently " + jsonifed_resp[0]['price_usd'] + " us dollars"
+    
     print("Response:")
     print(speech)
     
