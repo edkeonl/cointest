@@ -30,8 +30,8 @@ def webhook():
     result = urllib.urlopen(coin_url).read()
     data = json.loads(result)
     
-    coin_name = str(jsonifed_resp[0]['name'])
-    coin_price = str(jsonifed_resp[0]['price_usd'])
+    coin_name = str(data[0]['name'])
+    coin_price = str(data[0]['price_usd'])
 
     speech = coin_name + " is currently " + coin_price + " US dollars"
     #speech = "coin coin coin"
