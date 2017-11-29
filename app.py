@@ -15,23 +15,17 @@ app = Flask(__name__)
 def webhook():
     req = request.get_json(silent=True, force=True)
 
-    print("Request:")
-    print(json.dumps(req, indent=4))
-
     res = makeCoinQuery(req)
 
-    print("Response:")
-    print(speech)
-    
     res = json.dumps(res, indent=4)
-    #print(res)
+
     r = make_response(res)
     r.headers['Content-Type'] = 'application/json'
     return r
 
 def makeCoinQuery(req):
-    if req.get("result").get("action") != "coin_change":
-        return {}
+    #if req.get("result").get("action") != "coin_change":
+    #    return {}
     result = req.get("result")
     parameters = result.get("parameters")
     coin_type = parameters.get("cryptocurrency")
@@ -53,7 +47,7 @@ def makeCoinQuery(req):
         "displayText": speech,
         "data": {},
         "contextOut": [],
-        "source": "apiai-slack-richformatting"
+        "source": "coin_market_cap"
     }
 
     return res
