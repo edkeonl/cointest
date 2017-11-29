@@ -35,9 +35,7 @@ def makeCoinQuery(req):
     result = req.get("result")
     parameters = result.get("parameters")
     coin_type = parameters.get("cryptocurrency")
-    if coin_type is None:
-        return None
-        
+
     baseurl = "https://api.coinmarketcap.com/v1/ticker/"
     coin_url = baseurl + coin_type
     
