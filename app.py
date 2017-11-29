@@ -25,10 +25,10 @@ def webhook():
     coin_type = parameters.get("cryptocurrency")
     
     baseurl = "https://api.coinmarketcap.com/v1/ticker/"
-    coin_url = baseurl + str(coin_type)
+    coin_url = baseurl + coin_type
     
-    result = urllib.urlopen(coin_url).read()
-    data = json.loads(result)
+    #result = urllib.urlopen(coin_url).read()
+    #data = json.loads(result)
     
     #coin_name = str(data[0]['name'])
     #coin_price = str(data[0]['price_usd'])
