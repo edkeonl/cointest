@@ -18,26 +18,37 @@ def webhook():
     print("Request:")
     print(json.dumps(req, indent=4))
 
+    res = makeCoinQuery(req)
+
+    print("Response:")
+    print(speech)
+    
+    res = json.dumps(res, indent=4)
+    #print(res)
+    r = make_response(res)
+    r.headers['Content-Type'] = 'application/json'
+    return r
+
+def makeCoinQuery(req):
     if req.get("result").get("action") != "coin_change":
         return {}
     result = req.get("result")
     parameters = result.get("parameters")
     coin_type = parameters.get("cryptocurrency")
-    
+    if coin_type is None:
+        return None
+        
     baseurl = "https://api.coinmarketcap.com/v1/ticker/"
     coin_url = baseurl + coin_type
     
-    coin_data = urllib.urlopen(coin_url).read()
-    data = json.loads(coin_data)
+    #coin_data = urllib.urlopen(coin_url).read()
+    #data = json.loads(coin_data)
     
     #coin_name = str(data[0]['name'])
     #coin_price = str(data[0]['price_usd'])
-
+    
     #speech = coin_name + " is currently " + coin_price + " US dollars"
     speech = "coin coin coin"
-
-    print("Response:")
-    print(speech)
     
     res = {
         "speech": speech,
@@ -46,21 +57,8 @@ def webhook():
         "contextOut": [],
         "source": "apiai-slack-richformatting"
     }
-    
-    res = json.dumps(res, indent=4)
-    print(res)
-    r = make_response(res)
-    r.headers['Content-Type'] = 'application/json'
-    return r
 
-def makeCoinQuery(req):
-    result = req.get("result")
-    parameters = result.get("parameters")
-    coin_type = parameters.get("cryptocurrency")
-    if coin_type is None:
-        return None
-
-    return coin_type
+    return res
 
 if __name__ == '__main__':
     port = int(os.getenv('PORT', 5000))
