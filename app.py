@@ -36,11 +36,11 @@ def makeCoinQuery(req):
     coin_data = urllib.request.urlopen(coin_url).read()
     data = json.loads(coin_data)
     
-    #coin_name = str(data[0]['name'])
-    #coin_price = str(data[0]['price_usd'])
+    coin_name = str(data[0]['name'])
+    coin_price = str(data[0]['price_usd'])
     
-    #speech = coin_name + " is currently " + coin_price + " US dollars"
-    speech = "coin coin coin"
+    speech = coin_name + " is currently " + coin_price + " US dollars"
+    #speech = "coin coin coin"
     
     res = {
         "speech": speech,
