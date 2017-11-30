@@ -16,6 +16,7 @@ def webhook():
     req = request.get_json(silent=True, force=True)
 
     res = makeCoinQuery(req)
+    res = coinChangeQuery(req)
 
     res = json.dumps(res, indent=4)
 
@@ -24,7 +25,7 @@ def webhook():
     return r
 
 def makeCoinQuery(req):
-    if req.get("result").get("action") != "coin_change":
+    if req.get("result").get("action") != "coin_price":
         return {}
     result = req.get("result")
     parameters = result.get("parameters")
@@ -39,8 +40,35 @@ def makeCoinQuery(req):
     coin_name = str(data[0]['name'])
     coin_price = str(data[0]['price_usd'])
     
-    speech = coin_name + " is currently " + coin_price + " US dollars"
-    #speech = "coin coin coin"
+    speech = coin_name + " is currently " + coin_price + " US Dollars"
+    
+    res = {
+        "speech": speech,
+        "displayText": speech,
+        "data": {},
+        "contextOut": [],
+        "source": "coin_market_cap"
+    }
+
+    return res
+    
+def coinChangeQuery(req):
+    if req.get("result").get("action") != "coin_change":
+        return {}
+    result = req.get("result")
+    parameters = result.get("parameters")
+    coin_type = parameters.get("cryptocurrency")
+
+    baseurl = "https://api.coinmarketcap.com/v1/ticker/"
+    coin_url = baseurl + coin_type
+    
+    coin_data = urllib.request.urlopen(coin_url).read()
+    data = json.loads(coin_data)
+    
+    coin_name = str(data[0]['name'])
+    coin_percent_1h = str(data[0]['percent_change_1h'])
+    
+    speech = coin_name + " has changed " + coin_percent_1h + " % in the last hour"
     
     res = {
         "speech": speech,
