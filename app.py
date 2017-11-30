@@ -15,8 +15,10 @@ app = Flask(__name__)
 def webhook():
     req = request.get_json(silent=True, force=True)
 
-    res = makeCoinQuery(req)
-    res = coinChangeQuery(req)
+    if req.get("result").get("action") == "coin_price":
+        res = makeCoinQuery(req)
+    elif req.get("result").get("action") == "coin_change":
+        res = coinChangeQuery(req)
 
     res = json.dumps(res, indent=4)
 
@@ -25,8 +27,8 @@ def webhook():
     return r
 
 def makeCoinQuery(req):
-    if req.get("result").get("action") != "coin_price":
-        return {}
+    #if req.get("result").get("action") != "coin_price":
+    #    return {}
     result = req.get("result")
     parameters = result.get("parameters")
     coin_type = parameters.get("cryptocurrency")
@@ -53,8 +55,8 @@ def makeCoinQuery(req):
     return res
     
 def coinChangeQuery(req):
-    if req.get("result").get("action") != "coin_change":
-        return {}
+    #if req.get("result").get("action") != "coin_change":
+    #    return {}
     result = req.get("result")
     parameters = result.get("parameters")
     coin_type = parameters.get("cryptocurrency")
