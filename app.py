@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-#import urllib
+import urllib.request
 import json
 import os
 
@@ -33,8 +33,8 @@ def makeCoinQuery(req):
     baseurl = "https://api.coinmarketcap.com/v1/ticker/"
     coin_url = baseurl + coin_type
     
-    #coin_data = urllib.urlopen(coin_url).read()
-    #data = json.loads(coin_data)
+    coin_data = urllib.request.urlopen(coin_url).read()
+    data = json.loads(coin_data)
     
     #coin_name = str(data[0]['name'])
     #coin_price = str(data[0]['price_usd'])
