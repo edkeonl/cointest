@@ -37,6 +37,10 @@ def makeCoinQuery(req):
     coin_data = urllib.request.urlopen(coin_url).read()
     data = json.loads(coin_data)
     
+    t_url = "https://api.coinone.co.kr/ticker/?currency=bch"
+    coinone_d = urllib.request.urlopen(t_url).read()
+    coinone_data = json.loads(coinone_d)
+    
     coin_name = str(data[0]['name'])
     coin_price = str(data[0]['price_usd'])
     
