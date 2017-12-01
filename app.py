@@ -27,8 +27,6 @@ def webhook():
     return r
 
 def makeCoinQuery(req):
-    #if req.get("result").get("action") != "coin_price":
-    #    return {}
     result = req.get("result")
     parameters = result.get("parameters")
     coin_type = parameters.get("cryptocurrency")
@@ -55,11 +53,10 @@ def makeCoinQuery(req):
     return res
     
 def coinChangeQuery(req):
-    #if req.get("result").get("action") != "coin_change":
-    #    return {}
     result = req.get("result")
     parameters = result.get("parameters")
     coin_type = parameters.get("cryptocurrency")
+    time_length = parameters.get("time_length")
 
     baseurl = "https://api.coinmarketcap.com/v1/ticker/"
     coin_url = baseurl + coin_type
@@ -68,9 +65,15 @@ def coinChangeQuery(req):
     data = json.loads(coin_data)
     
     coin_name = str(data[0]['name'])
-    coin_percent_1h = str(data[0]['percent_change_1h'])
-    
-    speech = coin_name + " has changed " + coin_percent_1h + " % in the last hour"
+    if time_length == "1 hour":
+        coin_percent = str(data[0]['percent_change_1h'])
+        speech = coin_name + " has changed " + coin_percent + " % in the last hour"
+    elif time_length == "24 hours":
+        coin_percent = str(data[0]['percent_change_24h'])
+        speech = coin_name + " has changed " + coin_percent + " % in the last 24 hours"
+    elif time_length == "7 days":
+        coin_percent = str(data[0]['percent_change_7d'])
+        speech = coin_name + " has changed " + coin_percent + " % in the last 7 days"
     
     res = {
         "speech": speech,
