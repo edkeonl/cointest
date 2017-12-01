@@ -42,10 +42,10 @@ def makeCoinQuery(req):
     
     speech = coin_name + " is currently " + coin_price + " US Dollars"
     
-    if data[0]['symbol'] == 'BTC'
+    if str(data[0]['symbol']) == 'BTC'
         temp_r = requests.get('https://api.coinone.co.kr/ticker/?currency=bch')
         coinone_value = requests.get(temp_r.url).json()
-        coinone_price = coinone_price['last']
+        coinone_price = coinone_value['last']
         speech = coin_name + " is currently $" + coin_price + ", Coinone price is " + coinone_price + "KRW"
     
     res = {
