@@ -45,7 +45,7 @@ def makeCoinQuery(req):
     coin_name = str(data[0]['name'])
     coin_price = str(data[0]['price_usd'])
     
-    speech = coin_name + " is currently $" + coin_price + ", (Coinbase = " + " KRW")
+    speech = coin_name + " is currently $" + coin_price + ", (Coinbase = " + str(coinone_price) + " KRW")
     #speech = coin_name + " is currently " + coin_price + " US Dollars"
     
     res = {
