@@ -40,11 +40,12 @@ def makeCoinQuery(req):
     t_url = "https://api.coinone.co.kr/ticker/?currency=bch"
     coinone_d = urllib.request.urlopen(t_url).read()
     coinone_data = json.loads(coinone_d)
+    coinone_price = coinone_data['last']
     
     coin_name = str(data[0]['name'])
     coin_price = str(data[0]['price_usd'])
     
-    speech = coin_name + " is currently $" + coin_price + ", (Coinbase = " + coinone_data['last'] + " KRW")
+    speech = coin_name + " is currently $" + coin_price + ", (Coinbase = " + coinone_price + " KRW")
     #speech = coin_name + " is currently " + coin_price + " US Dollars"
     
     res = {
