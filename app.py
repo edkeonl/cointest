@@ -137,10 +137,11 @@ def coinPremiumQuery(req):
     coinone_price_data = json.loads(coinone_price_url)
     coinone_price = float(coinone_price_data['last'])
     
-    coin_premium = bitfinex_price_KRW / coinone_price
+    coin_premium = coinone_price / bitfinex_price_KRW
+    coin_premium = str(round(coin_premium, 2))
     
-    #speech = "Premium for " + coin_name + "is " + str(coin_premium)
-    speech = coin_premium
+    speech = "Premium for " + coin_name + "is " + coin_premium
+    #speech = coin_premium
     
     res = {
         "speech": speech,
