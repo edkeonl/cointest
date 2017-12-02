@@ -42,18 +42,10 @@ def makeCoinQuery(req):
     coin_price = str(data[0]['price_usd'])
     coin_symbol = str(data[0]['symbol'])
     
-    coinone_price_b_url = "https://api.coinone.co.kr/ticker/?currency="
-    coinone_price_t_url = coinone_price_b_url + coin_symbol
-    coinone_price_url = urllib.request.urlopen(coinone_price_t_url).read()
+    coinoneParameters(coin_symbol)
     
-    #define coinone parameters 
-    coinone_price_data = json.loads(coinone_price_url)
-    coinone_price = str(coinone_price_data['last'])
-    
-    #coins listed in Coinone
-    coinone_coins = ['BTC', 'BCH', 'ETH', 'ETC', 'XRP', 'QTUM', 'IOTA', 'LTC']
     if coin_symbol in coinone_coins:
-        speech = coin_name + " is currently $" + coin_price + " Coinone is currently " + coinone_price + " KRW"
+        speech = coin_name + " is currently $" + coin_price + " Coinone is currently ₩" + coinone_price
     else:
         speech = coin_name + " is currently " + coin_price + " US Dollars"
     
@@ -98,7 +90,22 @@ def coinChangeQuery(req):
         "source": "coin_market_cap"
     }
 
-    return res
+    return res    
+
+def coinPremium:
+    print("yes")
+
+def coinoneParameters(symbol):
+    coinone_price_b_url = "https://api.coinone.co.kr/ticker/?currency="
+    coinone_price_t_url = coinone_price_b_url + symbol
+    coinone_price_url = urllib.request.urlopen(coinone_price_t_url).read()
+    
+    #define coinone parameters 
+    coinone_price_data = json.loads(coinone_price_url)
+    coinone_price = str(coinone_price_data['last'])
+    
+    #coins listed in Coinone
+    coinone_coins = ['BTC', 'BCH', 'ETH', 'ETC', 'XRP', 'QTUM', 'IOTA', 'LTC']
 
 if __name__ == '__main__':
     port = int(os.getenv('PORT', 5000))
