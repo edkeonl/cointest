@@ -46,8 +46,7 @@ def makeCoinQuery(req):
     #coins listed in Coinone
     coinone_coins = ['BTC', 'BCH', 'ETH', 'ETC', 'XRP', 'QTUM', 'IOTA', 'LTC']
     if coin_symbol in coinone_coins:
-        speech = coin_name + " is currently " + coin_price + " US Dollars"
-        #speech = coin_name + " is currently $" + coin_price + " Coinone is currently ₩" + coinone_price
+        speech = coin_name + " is currently $" + coin_price + " Coinone is currently ₩" + coinone_price
     else:
         speech = coin_name + " is currently " + coin_price + " US Dollars"
     
@@ -197,6 +196,6 @@ def CurrencyConverter(price, currency):
 if __name__ == '__main__':
     port = int(os.getenv('PORT', 5000))
 
-    print "Starting app on port %d" % port
+    #print "Starting app on port %d" % port
 
     app.run(debug=True, port=port, host='0.0.0.0')
