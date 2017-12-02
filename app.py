@@ -37,13 +37,18 @@ def makeCoinQuery(req):
     coin_data = urllib.request.urlopen(coin_url).read()
     data = json.loads(coin_data)
     
-    t_url = "https://api.coinone.co.kr/ticker/?currency=bch"
-    coinone_d = urllib.request.urlopen(t_url).read()
-    coinone_data = json.loads(coinone_d)
-    coinone_price = str(coinone_data['last'])
-    
+    #define coin market cap parameters 
     coin_name = str(data[0]['name'])
     coin_price = str(data[0]['price_usd'])
+    coin_symbol = str(data[0]['symbol'])
+    
+    coinone_price_b_url = "https://api.coinone.co.kr/ticker/?currency="
+    coinone_price_t_url = coinone_price_b_url + coin_symbol
+    coinone_price_url = urllib.request.urlopen(coinone_price_t_url).read()
+    
+    #define coinone parameters 
+    coinone_price_data = json.loads(coinone_price_url)
+    coinone_price = str(coinone_price_data['last'])
     
     #str(data[0]['symbol']) == BTC:
     if coin_name == 'Bitcoin':
