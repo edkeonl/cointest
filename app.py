@@ -41,12 +41,13 @@ def makeCoinQuery(req):
     coin_symbol = str(cmc['symbol'])
     
     co = coinoneParameters(coin_symbol)
-    coinone_price = str(co['last'])
+    coinone_price = co['last']
     
     #coins listed in Coinone
     coinone_coins = ['BTC', 'BCH', 'ETH', 'ETC', 'XRP', 'QTUM', 'IOTA', 'LTC']
     if coin_symbol in coinone_coins:
-        speech = coin_name + " is currently $" + coin_price + " Coinone is currently ₩" + coinone_price
+        speech = coin_name + " is currently " + coin_price + " US Dollars"
+        #speech = coin_name + " is currently $" + coin_price + " Coinone is currently ₩" + coinone_price
     else:
         speech = coin_name + " is currently " + coin_price + " US Dollars"
     
