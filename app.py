@@ -169,11 +169,11 @@ def coinoneParameters(type):
 
 def bitfinexParameters(type):
     bitfinex_b_url = "https://api.bitfinex.com/v1/pubticker/"
-    bitfinex_price_t_url = bitfinex_b_url + coin_symbol + "usd"
+    bitfinex_price_t_url = bitfinex_b_url + type + "usd"
     bitfinex_price_url = urllib.request.urlopen(bitfinex_price_t_url).read()
     bitfinex_price_data = json.loads(bitfinex_price_url)
     
-    #define coinone parameters 
+    #define bitfinex parameters 
     res = {
         "mid": bitfinex_price_data['mid'],
         "bid": bitfinex_price_data['bid'],
@@ -188,14 +188,14 @@ def bitfinexParameters(type):
 def CurrencyConverter(price, currency):
     # 1 USD = 1,082.48 KRW
     ratio_USDtoKRW = 1082.48
-    if currency is 'USDtoKRW'
-        converted_price = price*ratio_USDtoKRW
+    #if currency is 'USDtoKRW'
+    converted_price = price*ratio_USDtoKRW
     
     return converted_price
 
 if __name__ == '__main__':
     port = int(os.getenv('PORT', 5000))
 
-    #print "Starting app on port %d" % port
+    print "Starting app on port %d" % port
 
     app.run(debug=True, port=port, host='0.0.0.0')
