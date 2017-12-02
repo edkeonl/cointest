@@ -45,7 +45,8 @@ def makeCoinQuery(req):
     coin_name = str(data[0]['name'])
     coin_price = str(data[0]['price_usd'])
     
-    if str(data[0]['symbol']) == BTC:
+    #str(data[0]['symbol']) == BTC:
+    if coin_name = 'bitcoin'
         speech = coin_name + " is currently $" + coin_price + " Coinone is currently " + coinone_price + " KRW"
     else:
         speech = coin_name + " is currently " + coin_price + " US Dollars"
