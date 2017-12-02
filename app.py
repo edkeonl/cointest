@@ -19,6 +19,8 @@ def webhook():
         res = makeCoinQuery(req)
     elif req.get("result").get("action") == "coin_change":
         res = coinChangeQuery(req)
+    elif req.get("result").get("action") == "coin_premium":
+        res = coinPremiumQuery(req)
 
     res = json.dumps(res, indent=4)
 
@@ -42,8 +44,16 @@ def makeCoinQuery(req):
     coin_price = str(data[0]['price_usd'])
     coin_symbol = str(data[0]['symbol'])
     
-    coinoneParameters(coin_symbol)
+    coinone_price_b_url = "https://api.coinone.co.kr/ticker/?currency="
+    coinone_price_t_url = coinone_price_b_url + coin_symbol
+    coinone_price_url = urllib.request.urlopen(coinone_price_t_url).read()
     
+    #define coinone parameters 
+    coinone_price_data = json.loads(coinone_price_url)
+    coinone_price = str(coinone_price_data['last'])
+    
+    #coins listed in Coinone
+    coinone_coins = ['BTC', 'BCH', 'ETH', 'ETC', 'XRP', 'QTUM', 'IOTA', 'LTC']
     if coin_symbol in coinone_coins:
         speech = coin_name + " is currently $" + coin_price + " Coinone is currently ₩" + coinone_price
     else:
@@ -92,20 +102,54 @@ def coinChangeQuery(req):
 
     return res    
 
-def coinPremium:
-    print("yes")
-
-def coinoneParameters(symbol):
+def coinPremiumQuery(req):
+    result = req.get("result")
+    parameters = result.get("parameters")
+    coin_type = parameters.get("cryptocurrency")
+    
+    coin_data = urllib.request.urlopen(coin_url).read()
+    data = json.loads(coin_data)
+    
+    #define coin market cap parameters 
+    coin_name = str(data[0]['name'])
+    coin_symbol = str(data[0]['symbol'])
+    
+    bitfinex_b_url = "https://api.bitfinex.com/v1/pubticker/"
+    bitfinex_price_t_url = bitfinex_b_url + coin_symbol + "usd"
+    bitfinex_price_url = urllib.request.urlopen(bitfinex_price_t_url).read()
+    
+    #define coinone parameters 
+    bitfinex_price_data = json.loads(bitfinex_price_url)
+    bitfinex_price = bitfinex_price_data['last_price']
+    
+    #convert bitfinex price from USD to KRW
+    # 1 USD = 1,082.48 KRW
+    convert_USDtoKRW = 1082.48
+    bitfinex_price_KRW = float(bitfinex_price)*convert_USDtoKRW
+    
     coinone_price_b_url = "https://api.coinone.co.kr/ticker/?currency="
-    coinone_price_t_url = coinone_price_b_url + symbol
+    coinone_price_t_url = coinone_price_b_url + coin_symbol
     coinone_price_url = urllib.request.urlopen(coinone_price_t_url).read()
     
     #define coinone parameters 
     coinone_price_data = json.loads(coinone_price_url)
-    coinone_price = str(coinone_price_data['last'])
+    coinone_price = float(coinone_price_data['last'])
     
-    #coins listed in Coinone
-    coinone_coins = ['BTC', 'BCH', 'ETH', 'ETC', 'XRP', 'QTUM', 'IOTA', 'LTC']
+    coin_premium = bitfinex_price_KRW / coinone_price
+    
+    speech = "Premium for " + coin_name + "is " + str(coin_premium)
+    
+    res = {
+        "speech": speech,
+        "displayText": speech,
+        "data": {},
+        "contextOut": [],
+        "source": "coin_market_cap"
+    }
+
+    return res
+
+
 
 if __name__ == '__main__':
     port = int(os.getenv('PORT', 5000))
