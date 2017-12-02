@@ -38,13 +38,27 @@ def coinmarketcapParameters(type):
     coin_name = str(coinmarketcap_data[0]['name'])
     coin_price = str(coinmarketcap_data[0]['price_usd'])
     coin_symbol = str(coinmarketcap_data[0]['symbol'])
+    
+    res = {
+        "name": coinmarketcap_data[0]['name'],
+        "symbol": coinmarketcap_data[0]['symbol'],
+        "rank": coinmarketcap_data[0]['rank'],
+        "price_usd": coinmarketcap_data[0]['price_usd'],
+        "24h_volume_usd": coinmarketcap_data[0]['24h_volume_usd'],
+        "market_cap_usd": coinmarketcap_data[0]['market_cap_usd'],
+        "percent_change_1h": coinmarketcap_data[0]['percent_change_1h'],
+        "percent_change_24h": coinmarketcap_data[0]['percent_change_24h'],
+        "percent_change_7d": coinmarketcap_data[0]['percent_change_7d'],
+    }
+    return res
+
 
 def makeCoinQuery(req):
     result = req.get("result")
     parameters = result.get("parameters")
     coin_type = parameters.get("cryptocurrency")
     
-    coinmarketcapParameters(coin_type)
+    cm = coinmarketcapParameters(coin_type)
 
     #baseurl = "https://api.coinmarketcap.com/v1/ticker/"
     #coin_url = baseurl + coin_type
@@ -53,9 +67,9 @@ def makeCoinQuery(req):
     #data = json.loads(coin_data)
     
     #define coin market cap parameters 
-    #coin_name = str(data[0]['name'])
-    #coin_price = str(data[0]['price_usd'])
-    #coin_symbol = str(data[0]['symbol'])
+    coin_name = str(cm['name'])
+    coin_price = str(cm['price_usd'])
+    coin_symbol = str(cm['symbol'])
     
     coinone_price_b_url = "https://api.coinone.co.kr/ticker/?currency="
     coinone_price_t_url = coinone_price_b_url + coin_symbol
