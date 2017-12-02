@@ -28,56 +28,20 @@ def webhook():
     r.headers['Content-Type'] = 'application/json'
     return r
 
-def coinmarketcapParameters(type):
-    coinmarketcap_b_url = "https://api.coinmarketcap.com/v1/ticker/"
-    coinmarketcap_t_url = coinmarketcap_b_url + type
-    coinmarketcap_t_data = urllib.request.urlopen(coinmarketcap_t_url).read()
-    coinmarketcap_data = json.loads(coinmarketcap_t_data)
-    
-    #define coin market cap parameters 
-    coin_name = str(coinmarketcap_data[0]['name'])
-    coin_price = str(coinmarketcap_data[0]['price_usd'])
-    coin_symbol = str(coinmarketcap_data[0]['symbol'])
-    
-    res = {
-        "name": coinmarketcap_data[0]['name'],
-        "symbol": coinmarketcap_data[0]['symbol'],
-        "rank": coinmarketcap_data[0]['rank'],
-        "price_usd": coinmarketcap_data[0]['price_usd'],
-        "24h_volume_usd": coinmarketcap_data[0]['24h_volume_usd'],
-        "market_cap_usd": coinmarketcap_data[0]['market_cap_usd'],
-        "percent_change_1h": coinmarketcap_data[0]['percent_change_1h'],
-        "percent_change_24h": coinmarketcap_data[0]['percent_change_24h'],
-        "percent_change_7d": coinmarketcap_data[0]['percent_change_7d'],
-    }
-    return res
-
-
 def makeCoinQuery(req):
     result = req.get("result")
     parameters = result.get("parameters")
     coin_type = parameters.get("cryptocurrency")
     
-    cm = coinmarketcapParameters(coin_type)
+    cmc = coinmarketcapParameters(coin_type)
 
-    #baseurl = "https://api.coinmarketcap.com/v1/ticker/"
-    #coin_url = baseurl + coin_type
-    
-    #coin_data = urllib.request.urlopen(coin_url).read()
-    #data = json.loads(coin_data)
-    
     #define coin market cap parameters 
-    coin_name = str(cm['name'])
-    coin_price = str(cm['price_usd'])
-    coin_symbol = str(cm['symbol'])
+    coin_name = str(cmc['name'])
+    coin_price = str(cmc['price_usd'])
+    coin_symbol = str(cmc['symbol'])
     
-    coinone_price_b_url = "https://api.coinone.co.kr/ticker/?currency="
-    coinone_price_t_url = coinone_price_b_url + coin_symbol
-    coinone_price_url = urllib.request.urlopen(coinone_price_t_url).read()
-    
-    #define coinone parameters 
-    coinone_price_data = json.loads(coinone_price_url)
-    coinone_price = str(coinone_price_data['last'])
+    co = coinoneParameters(coin_symbol)
+    coinone_price = str(co['last'])
     
     #coins listed in Coinone
     coinone_coins = ['BTC', 'BCH', 'ETH', 'ETC', 'XRP', 'QTUM', 'IOTA', 'LTC']
@@ -102,21 +66,17 @@ def coinChangeQuery(req):
     coin_type = parameters.get("cryptocurrency")
     time_length = parameters.get("time_length")
 
-    baseurl = "https://api.coinmarketcap.com/v1/ticker/"
-    coin_url = baseurl + coin_type
-    
-    coin_data = urllib.request.urlopen(coin_url).read()
-    data = json.loads(coin_data)
+    cmc = coinmarketcapParameters(coin_type)
     
     coin_name = str(data[0]['name'])
     if time_length == "1 hour":
-        coin_percent = str(data[0]['percent_change_1h'])
+        coin_percent = str(cmc['percent_change_1h'])
         speech = coin_name + " has changed " + coin_percent + " % in the last hour"
     elif time_length == "24 hours":
-        coin_percent = str(data[0]['percent_change_24h'])
+        coin_percent = str(cmc['percent_change_24h'])
         speech = coin_name + " has changed " + coin_percent + " % in the last 24 hours"
     elif time_length == "7 days":
-        coin_percent = str(data[0]['percent_change_7d'])
+        coin_percent = str(cmc['percent_change_7d'])
         speech = coin_name + " has changed " + coin_percent + " % in the last 7 days"
     
     res = {
@@ -143,32 +103,20 @@ def coinPremiumQuery(req):
     coin_name = str(data[0]['name'])
     coin_symbol = str(data[0]['symbol'])
     
-    bitfinex_b_url = "https://api.bitfinex.com/v1/pubticker/"
-    bitfinex_price_t_url = bitfinex_b_url + coin_symbol + "usd"
-    bitfinex_price_url = urllib.request.urlopen(bitfinex_price_t_url).read()
-    
-    #define coinone parameters 
-    bitfinex_price_data = json.loads(bitfinex_price_url)
-    bitfinex_price = bitfinex_price_data['last_price']
+    bf = bitfinexParameters(coin_symbol)
+    bitfinex_price = bf['last_price']
     
     #convert bitfinex price from USD to KRW
-    # 1 USD = 1,082.48 KRW
-    convert_USDtoKRW = 1082.48
-    bitfinex_price_KRW = float(bitfinex_price)*convert_USDtoKRW
+
+    bitfinex_price_KRW = CurrencyConverter(float(bitfinex_price), 'USDtoKRW')
     
-    coinone_price_b_url = "https://api.coinone.co.kr/ticker/?currency="
-    coinone_price_t_url = coinone_price_b_url + coin_symbol
-    coinone_price_url = urllib.request.urlopen(coinone_price_t_url).read()
-    
-    #define coinone parameters 
-    coinone_price_data = json.loads(coinone_price_url)
-    coinone_price = float(coinone_price_data['last'])
+    co = coinoneParameters(coin_symbol)
+    coinone_price = float(co['last'])
     
     coin_premium = ((coinone_price / bitfinex_price_KRW) - 1.00)*100
     coin_premium = str(round(coin_premium, 2))
     
     speech = "Premium for " + coin_name + " is " + coin_premium + "%"
-    #speech = coin_premium
     
     res = {
         "speech": speech,
@@ -180,7 +128,73 @@ def coinPremiumQuery(req):
 
     return res
 
+def coinmarketcapParameters(type):
+    coinmarketcap_b_url = "https://api.coinmarketcap.com/v1/ticker/"
+    coinmarketcap_t_url = coinmarketcap_b_url + type
+    coinmarketcap_t_data = urllib.request.urlopen(coinmarketcap_t_url).read()
+    coinmarketcap_data = json.loads(coinmarketcap_t_data)
+    
+    #define coin market cap parameters 
+    res = {
+        "name": coinmarketcap_data[0]['name'],
+        "symbol": coinmarketcap_data[0]['symbol'],
+        "rank": coinmarketcap_data[0]['rank'],
+        "price_usd": coinmarketcap_data[0]['price_usd'],
+        "24h_volume_usd": coinmarketcap_data[0]['24h_volume_usd'],
+        "market_cap_usd": coinmarketcap_data[0]['market_cap_usd'],
+        "percent_change_1h": coinmarketcap_data[0]['percent_change_1h'],
+        "percent_change_24h": coinmarketcap_data[0]['percent_change_24h'],
+        "percent_change_7d": coinmarketcap_data[0]['percent_change_7d'],
+    }
+    return res
+    
+def coinoneParameters(type):
+    coinone_price_b_url = "https://api.coinone.co.kr/ticker/?currency="
+    coinone_price_t_url = coinone_price_b_url + type
+    coinone_price_url = urllib.request.urlopen(coinone_price_t_url).read()
+    coinone_price_data = json.loads(coinone_price_url)
+    
+    #define coinone parameters 
+    res = {
+        "volume": coinone_price_data['volume'],
+        "last": coinone_price_data['last'],
+        "yesterday_last": coinone_price_data['yesterday_last'],
+        "yesterday_low": coinone_price_data['yesterday_low'],
+        "high": coinone_price_data['high'],
+        "currency": coinone_price_data['currency'],
+        "low": coinone_price_data['low'],
+        "yesterday_first": coinone_price_data['yesterday_first'],
+        "yesterday_volume": coinone_price_data['yesterday_volume'],
+        "yesterday_high": coinone_price_data['yesterday_high'],
+        "first": coinone_price_data['first']
+    }
+    return res
 
+def bitfinexParameters(type):
+    bitfinex_b_url = "https://api.bitfinex.com/v1/pubticker/"
+    bitfinex_price_t_url = bitfinex_b_url + coin_symbol + "usd"
+    bitfinex_price_url = urllib.request.urlopen(bitfinex_price_t_url).read()
+    bitfinex_price_data = json.loads(bitfinex_price_url)
+    
+    #define coinone parameters 
+    res = {
+        "mid": bitfinex_price_data['mid'],
+        "bid": bitfinex_price_data['bid'],
+        "ask": bitfinex_price_data['ask'],
+        "last_price": bitfinex_price_data['last_price'],
+        "low": bitfinex_price_data['low'],
+        "high": bitfinex_price_data['high'],
+        "volume": bitfinex_price_data['volume']
+    }
+    return res
+
+def CurrencyConverter(price, currency):
+    # 1 USD = 1,082.48 KRW
+    ratio_USDtoKRW = 1082.48
+    if currency is 'USDtoKRW'
+        converted_price = price*ratio_USDtoKRW
+    
+    return converted_price
 
 if __name__ == '__main__':
     port = int(os.getenv('PORT', 5000))
