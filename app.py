@@ -68,7 +68,7 @@ def coinChangeQuery(req):
 
     cmc = coinmarketcapParameters(coin_type)
     
-    coin_name = str(data[0]['name'])
+    coin_name = str(cmc['name'])
     if time_length == "1 hour":
         coin_percent = str(cmc['percent_change_1h'])
         speech = coin_name + " has changed " + coin_percent + " % in the last hour"
@@ -94,14 +94,11 @@ def coinPremiumQuery(req):
     parameters = result.get("parameters")
     coin_type = parameters.get("cryptocurrency")
     
-    baseurl = "https://api.coinmarketcap.com/v1/ticker/"
-    coin_url = baseurl + coin_type
-    coin_data = urllib.request.urlopen(coin_url).read()
-    data = json.loads(coin_data)
+    cmc = coinmarketcapParameters(coin_type)
     
     #define coin market cap parameters 
-    coin_name = str(data[0]['name'])
-    coin_symbol = str(data[0]['symbol'])
+    coin_name = str(cmc['name'])
+    coin_symbol = str(cmc['symbol'])
     
     bf = bitfinexParameters(coin_symbol)
     bitfinex_price = bf['last_price']
