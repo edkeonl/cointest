@@ -50,8 +50,9 @@ def makeCoinQuery(req):
     coinone_price_data = json.loads(coinone_price_url)
     coinone_price = str(coinone_price_data['last'])
     
-    #str(data[0]['symbol']) == BTC:
-    if coin_name == 'Bitcoin':
+    #coins listed in Coinone
+    coinone_coins = ['BTC', 'BCH', 'ETH', 'ETC', 'XRP', 'QTUM', 'IOTA', 'LTC']
+    if coin_name in coinone_coins:
         speech = coin_name + " is currently $" + coin_price + " Coinone is currently " + coinone_price + " KRW"
     else:
         speech = coin_name + " is currently " + coin_price + " US Dollars"
