@@ -103,7 +103,7 @@ def coinPremiumQuery(req):
     bt = bithumbParameters(coin_symbol)
     bf = bitfinexParameters(coin_symbol)
     
-    bithumb_price = bt['average_price']
+    bithumb_price = float(bt['average_price'])
     bitfinex_price = bf['last_price']
     
     co = coinoneParameters(coin_symbol)
