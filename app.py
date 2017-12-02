@@ -107,6 +107,8 @@ def coinPremiumQuery(req):
     parameters = result.get("parameters")
     coin_type = parameters.get("cryptocurrency")
     
+    baseurl = "https://api.coinmarketcap.com/v1/ticker/"
+    coin_url = baseurl + coin_type
     coin_data = urllib.request.urlopen(coin_url).read()
     data = json.loads(coin_data)
     
@@ -137,7 +139,8 @@ def coinPremiumQuery(req):
     
     coin_premium = bitfinex_price_KRW / coinone_price
     
-    speech = "Premium for " + coin_name + "is " + str(coin_premium)
+    #speech = "Premium for " + coin_name + "is " + str(coin_premium)
+    speech = coin_premium
     
     res = {
         "speech": speech,
