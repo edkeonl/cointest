@@ -67,8 +67,8 @@ def coinChangeQuery(req):
     time_length = parameters.get("time_length")
 
     cmc = coinmarketcapParameters(coin_type)
+    coin_name = cmc['name']
     
-    coin_name = str(cmc['name'])
     if time_length == "1 hour":
         coin_percent = str(cmc['percent_change_1h'])
         speech = coin_name + " has changed " + coin_percent + " % in the last hour"
@@ -100,20 +100,25 @@ def coinPremiumQuery(req):
     coin_name = str(cmc['name'])
     coin_symbol = str(cmc['symbol'])
     
+    bt = bithumbParameters(coin_symbol)
     bf = bitfinexParameters(coin_symbol)
-    bitfinex_price = bf['last_price']
     
-    #convert bitfinex price from USD to KRW
-
-    bitfinex_price_KRW = CurrencyConverter(float(bitfinex_price), 'USDtoKRW')
+    bithumb_price = bt['average_price']
+    bitfinex_price = bf['last_price']
     
     co = coinoneParameters(coin_symbol)
     coinone_price = float(co['last'])
+
+    #convert bitfinex price from USD to KRW
+    bitfinex_price_KRW = CurrencyConverter(float(bitfinex_price), 'USDtoKRW')
     
-    coin_premium = ((coinone_price / bitfinex_price_KRW) - 1.00)*100
-    coin_premium = str(round(coin_premium, 2))
+    coin_coinone_premium = ((coinone_price / bitfinex_price_KRW) - 1.00)*100
+    coin_coinone_premium = str(round(coin_coinone_premium, 2))
     
-    speech = "Premium for " + coin_name + " is " + coin_premium + "%"
+    coin_bithumb_premium = ((bithumb_price / bitfinex_price_KRW) - 1.00)*100
+    coin_bithumb_premium = str(round(coin_bithumb_premium, 2))
+    
+    speech = "Premium for " + coin_name + " is " + coin_coinone_premium + "% (for Coinone) and " + coin_bithumb_premium + "% (for Bithumb)"
     
     res = {
         "speech": speech,
@@ -184,6 +189,28 @@ def bitfinexParameters(type):
         "volume": bitfinex_price_data['volume']
     }
     return res
+    
+def bithumbParameters(type):
+    bithumb_b_url = "https://api.bithumb.com/public/ticker/"
+    bithumb_price_t_url = bithumb_b_url + type
+    bithumb_price_url = urllib.request.urlopen(bithumb_price_t_url).read()
+    bithumb_price_data = json.loads(bithumb_price_url)
+    
+    #define bitfinex parameters 
+    res = {
+        "opening_price" : bithumb_price_data['data']['opening_price'],
+        "closing_price" : bithumb_price_data['data']['closing_price'],
+        "min_price"     : bithumb_price_data['data']['min_price'],
+        "max_price"     : bithumb_price_data['data']['max_price'],
+        "average_price" : bithumb_price_data['data']['average_price'],
+        "units_traded"  : bithumb_price_data['data']['units_traded'],
+        "volume_1day"   : bithumb_price_data['data']['volume_1day'],
+        "volume_7day"   : bithumb_price_data['data']['volume_7day'],
+        "buy_price"     : bithumb_price_data['data']['buy_price'],
+        "sell_price"    : bithumb_price_data['data']['sell_price']
+    }
+    return res    
+
 
 def CurrencyConverter(price, currency):
     # 1 USD = 1,082.48 KRW
