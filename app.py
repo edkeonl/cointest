@@ -28,21 +28,34 @@ def webhook():
     r.headers['Content-Type'] = 'application/json'
     return r
 
+def coinmarketcapParameters(type):
+    coinmarketcap_b_url = "https://api.coinmarketcap.com/v1/ticker/"
+    coinmarketcap_t_url = coinmarketcap_b_url + type
+    coinmarketcap_t_data = urllib.request.urlopen(coinmarketcap_t_url).read()
+    coinmarketcap_data = json.loads(coinmarketcap_t_data)
+    
+    #define coin market cap parameters 
+    coin_name = str(coinmarketcap_data[0]['name'])
+    coin_price = str(coinmarketcap_data[0]['price_usd'])
+    coin_symbol = str(coinmarketcap_data[0]['symbol'])
+
 def makeCoinQuery(req):
     result = req.get("result")
     parameters = result.get("parameters")
     coin_type = parameters.get("cryptocurrency")
-
-    baseurl = "https://api.coinmarketcap.com/v1/ticker/"
-    coin_url = baseurl + coin_type
     
-    coin_data = urllib.request.urlopen(coin_url).read()
-    data = json.loads(coin_data)
+    coinmarketcapParameters(coin_type)
+
+    #baseurl = "https://api.coinmarketcap.com/v1/ticker/"
+    #coin_url = baseurl + coin_type
+    
+    #coin_data = urllib.request.urlopen(coin_url).read()
+    #data = json.loads(coin_data)
     
     #define coin market cap parameters 
-    coin_name = str(data[0]['name'])
-    coin_price = str(data[0]['price_usd'])
-    coin_symbol = str(data[0]['symbol'])
+    #coin_name = str(data[0]['name'])
+    #coin_price = str(data[0]['price_usd'])
+    #coin_symbol = str(data[0]['symbol'])
     
     coinone_price_b_url = "https://api.coinone.co.kr/ticker/?currency="
     coinone_price_t_url = coinone_price_b_url + coin_symbol
