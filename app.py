@@ -135,7 +135,7 @@ def coinPremiumQuery(req):
 def exchangeQuery(req):
     result = req.get("result")
     parameters = result.get("parameters")
-    exchange = parameters.get("crypto_exchange")
+    exchange = parameters.get("crytpo_exchange")
     coin_type = parameters.get("cryptocurrency")
     
     cmc = coinmarketcapParameters(coin_type)
@@ -153,16 +153,22 @@ def exchangeQuery(req):
     bitfinex_price = float(bf['last_price'])
     coinone_price = float(co['last'])
     
-    
     if exchange == "Bitfinex":
-        coin_percent = str(cmc['percent_change_1h'])
         speech = coin_name + " is  $" + bitfinex_price + "at " + exchange
     elif exchange == "Bithumb":
-        coin_percent = str(cmc['percent_change_24h'])
         speech = coin_name + " is  ₩" + bithumb_price + "at " + exchange
     elif exchange == "Coinone":
-        coin_percent = str(cmc['percent_change_7d'])
         speech = coin_name + " is  ₩" + coinone_price + "at " + exchange
+    
+    res = {
+        "speech": speech,
+        "displayText": speech,
+        "data": {},
+        "contextOut": [],
+        "source": "nothing"
+    }
+
+    return res
 
 def coinmarketcapParameters(type):
     coinmarketcap_b_url = "https://api.coinmarketcap.com/v1/ticker/"
