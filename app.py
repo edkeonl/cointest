@@ -21,6 +21,8 @@ def webhook():
         res = coinChangeQuery(req)
     elif req.get("result").get("action") == "coin_premium":
         res = coinPremiumQuery(req)
+    elif req.get("result").get("action") == "exchange_data":
+        res = exchangeQuery(req)
 
     res = json.dumps(res, indent=4)
 
@@ -129,6 +131,38 @@ def coinPremiumQuery(req):
     }
 
     return res
+
+def exchangeQuery(req):
+    result = req.get("result")
+    parameters = result.get("parameters")
+    exchange = parameters.get("crypto_exchange")
+    coin_type = parameters.get("cryptocurrency")
+    
+    cmc = coinmarketcapParameters(coin_type)
+
+    #define coin market cap parameters 
+    coin_name = str(cmc['name'])
+    coin_price = str(cmc['price_usd'])
+    coin_symbol = str(cmc['symbol'])
+    
+    bt = bithumbParameters(coin_symbol)
+    bf = bitfinexParameters(coin_symbol)
+    co = coinoneParameters(coin_symbol)
+    
+    bithumb_price = float(bt['average_price'])
+    bitfinex_price = float(bf['last_price'])
+    coinone_price = float(co['last'])
+    
+    
+    if exchange == "Bitfinex":
+        coin_percent = str(cmc['percent_change_1h'])
+        speech = coin_name + " is  $" + bitfinex_price + "at " + exchange
+    elif exchange == "Bithumb":
+        coin_percent = str(cmc['percent_change_24h'])
+        speech = coin_name + " is  ₩" + bithumb_price + "at " + exchange
+    elif exchange == "Coinone":
+        coin_percent = str(cmc['percent_change_7d'])
+        speech = coin_name + " is  ₩" + coinone_price + "at " + exchange
 
 def coinmarketcapParameters(type):
     coinmarketcap_b_url = "https://api.coinmarketcap.com/v1/ticker/"
