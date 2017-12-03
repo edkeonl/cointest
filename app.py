@@ -141,17 +141,15 @@ def exchangeQuery(req):
     cmc = coinmarketcapParameters(coin_type)
 
     #define coin market cap parameters 
-    coin_name = str(cmc['name'])
-    coin_price = str(cmc['price_usd'])
     coin_symbol = str(cmc['symbol'])
     
     bt = bithumbParameters(coin_symbol)
     bf = bitfinexParameters(coin_symbol)
     co = coinoneParameters(coin_symbol)
     
-    bithumb_price = float(bt['average_price'])
-    bitfinex_price = float(bf['last_price'])
-    coinone_price = float(co['last'])
+    bithumb_price = bt['average_price']
+    bitfinex_price = bf['last_price']
+    coinone_price = co['last']
     
     if exchange == "Bitfinex":
         speech = coin_name + " is  $" + bitfinex_price + "at " + exchange
