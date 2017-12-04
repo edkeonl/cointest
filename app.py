@@ -123,7 +123,7 @@ def coinPremiumQuery(req):
     coin_bithumb_premium = str(round(coin_bithumb_premium, 2))
     
     #coins listed in Coinone and  Bithumb
-    coinone_coins = ['BTC', 'BCH', 'ETH', 'ETC', 'XRP', 'QTUM', 'IOTA', 'LTC']
+    coinone_coins = ['BTC', 'BCH', 'ETH', 'ETC', 'XRP', 'QTUM', 'MIOTA', 'LTC']
     bithumb_coins = ['BTC', 'ETH', 'DASH', 'LTC', 'ETC', 'XRP', 'BCH', 'XMR', 'ZEC', 'QTUM', 'BTG']
     
     if (coin_symbol in coinone_coins) and (coin_symbol in bithumb_coins):
