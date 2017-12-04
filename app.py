@@ -47,6 +47,7 @@ def makeCoinQuery(req):
     
     #coins listed in Coinone
     coinone_coins = ['BTC', 'BCH', 'ETH', 'ETC', 'XRP', 'QTUM', 'IOTA', 'LTC']
+    bithumb_coins = ['BTC', 'ETH', 'DASH', 'LTC', 'ETC', 'XRP', 'BCH', 'XMR', 'ZEC', 'QTUM', 'BTG']
     if coin_symbol in coinone_coins:
         speech = coin_name + " is currently $" + coin_price + " Coinone is currently ₩" + coinone_price
     else:
@@ -104,13 +105,12 @@ def coinPremiumQuery(req):
     
     bt = bithumbParameters(coin_symbol)
     bf = bitfinexParameters(coin_symbol)
+    co = coinoneParameters(coin_symbol)
     
     bithumb_price = float(bt['average_price'])
     bitfinex_price = bf['last_price']
-    
-    co = coinoneParameters(coin_symbol)
     coinone_price = float(co['last'])
-
+    
     #convert bitfinex price from USD to KRW
     bitfinex_price_KRW = CurrencyConverter(float(bitfinex_price), 'USDtoKRW')
     
@@ -120,7 +120,17 @@ def coinPremiumQuery(req):
     coin_bithumb_premium = ((bithumb_price / bitfinex_price_KRW) - 1.00)*100
     coin_bithumb_premium = str(round(coin_bithumb_premium, 2))
     
-    speech = "Premium for " + coin_name + " is " + coin_coinone_premium + "% (for Coinone) and " + coin_bithumb_premium + "% (for Bithumb)"
+    #coins listed in Coinone
+    coinone_coins = ['BTC', 'BCH', 'ETH', 'ETC', 'XRP', 'QTUM', 'IOTA', 'LTC']
+    bithumb_coins = ['BTC', 'ETH', 'DASH', 'LTC', 'ETC', 'XRP', 'BCH', 'XMR', 'ZEC', 'QTUM', 'BTG']
+    if (coin_symbol in coinone_coins) and (coin_symbol in bithumb_coins):
+        speech = "Premium for " + coin_name + " is " + coin_coinone_premium + "% (for Coinone) and " + coin_bithumb_premium + "% (for Bithumb)"
+    elif (coin_symbol in coinone_coins)
+        speech = "Premium for " + coin_name + " is " + coin_coinone_premium + "% (for Coinone)"
+    elif (coin_symbol in bithumb_coins)
+        speech = "Premium for " + coin_name + " is " + coin_bithumb_premium + "% (for Bithumb)"
+    else
+        speech = coin_name + "does not exist in Coinone or Bithumb"
     
     res = {
         "speech": speech,
