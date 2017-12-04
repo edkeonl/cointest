@@ -126,7 +126,6 @@ def coinPremiumQuery(req):
     bithumb_coins = ['BTC', 'ETH', 'DASH', 'LTC', 'ETC', 'XRP', 'BCH', 'XMR', 'ZEC', 'QTUM', 'BTG']
     bitfinex_coins = ['BTC', 'BCH', 'ETH', 'ETC', 'ZEC', 'LTC' 'MIOTA', 'USDT']
     
-     “bitcoin”, “litecoin”, “ethereum”, “tetheruso", "ethereumc", "zcash", "monero", "iota", "bcash"
     coin_symbol = "MIOTA"
     if (coin_symbol in coinone_coins) and (coin_symbol in bithumb_coins) and (coin_symbol in bitfinex_coins):
         speech = "Premium for " + coin_name + " is " + coin_coinone_premium + "% (for Coinone) and " + coin_bithumb_premium + "% (for Bithumb)"
