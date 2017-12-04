@@ -117,20 +117,22 @@ def coinPremiumQuery(req):
     bitfinex_price_KRW = CurrencyConverter(float(bitfinex_price), 'USDtoKRW')
     
     coin_coinone_premium = ((coinone_price / bitfinex_price_KRW) - 1.00)*100
-    coin_coinone_premium = str(round(coin_coinone_premium, 2))
-    
+    coin_coinone_premium = str(round(coin_coinone_premium, 2))    
     coin_bithumb_premium = ((bithumb_price / bitfinex_price_KRW) - 1.00)*100
     coin_bithumb_premium = str(round(coin_bithumb_premium, 2))
     
     #coins listed in Coinone and  Bithumb
     coinone_coins = ['BTC', 'BCH', 'ETH', 'ETC', 'XRP', 'QTUM', 'MIOTA', 'LTC']
     bithumb_coins = ['BTC', 'ETH', 'DASH', 'LTC', 'ETC', 'XRP', 'BCH', 'XMR', 'ZEC', 'QTUM', 'BTG']
+    bitfinex_coins = ['BTC', 'BCH', 'ETH', 'ETC', 'ZEC', 'LTC' 'MIOTA', 'USDT']
+    
+     “bitcoin”, “litecoin”, “ethereum”, “tetheruso", "ethereumc", "zcash", "monero", "iota", "bcash"
     coin_symbol = "MIOTA"
-    if (coin_symbol in coinone_coins) and (coin_symbol in bithumb_coins):
+    if (coin_symbol in coinone_coins) and (coin_symbol in bithumb_coins) and (coin_symbol in bitfinex_coins):
         speech = "Premium for " + coin_name + " is " + coin_coinone_premium + "% (for Coinone) and " + coin_bithumb_premium + "% (for Bithumb)"
-    elif (coin_symbol in coinone_coins) and (coin_symbol not in bithumb_coins):
+    elif (coin_symbol in coinone_coins) and (coin_symbol not in bithumb_coins) and (coin_symbol in bitfinex_coins):
         speech = "Premium for " + coin_name + " is " + coin_coinone_premium + "% (for Coinone)"
-    elif (coin_symbol not in coinone_coins) and (coin_symbol in bithumb_coins):
+    elif (coin_symbol not in coinone_coins) and (coin_symbol in bithumb_coins) and (coin_symbol in bitfinex_coins):
         speech = "Premium for " + coin_name + " is " + coin_bithumb_premium + "% (for Bithumb)"
     else:
         speech = coin_name + "does not exist in Coinone or Bithumb"
