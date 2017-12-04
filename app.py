@@ -128,10 +128,10 @@ def coinPremiumQuery(req):
     
     if (coin_symbol in coinone_coins) and (coin_symbol in bithumb_coins):
         speech = "Premium for " + coin_name + " is " + coin_coinone_premium + "% (for Coinone) and " + coin_bithumb_premium + "% (for Bithumb)"
-    #elif (coin_symbol in coinone_coins) and (coin_symbol not in bithumb_coins):
-    #    speech = "Premium for " + coin_name + " is " + coin_coinone_premium + "% (for Coinone)"
-    #elif (coin_symbol not in coinone_coins) and (coin_symbol in bithumb_coins):
-    #    speech = "Premium for " + coin_name + " is " + coin_bithumb_premium + "% (for Bithumb)"
+    elif (coin_symbol in coinone_coins) and (coin_symbol not in bithumb_coins):
+        speech = "Premium for " + coin_name + " is " + coin_coinone_premium + "% (for Coinone)"
+    elif (coin_symbol not in coinone_coins) and (coin_symbol in bithumb_coins):
+        speech = "Premium for " + coin_name + " is " + coin_bithumb_premium + "% (for Bithumb)"
     else:
         speech = coin_name + "does not exist in Coinone or Bithumb"
     
@@ -164,11 +164,11 @@ def exchangeQuery(req):
     bitfinex_price = bf['last_price']
     coinone_price = co['last']
     
-    if exchange == "Bitfinex":
+    if exchange == "bitfinex":
         speech = coin_name + " is  $" + bitfinex_price + "at " + exchange
-    elif exchange == "Bithumb":
+    elif exchange == "bithumb":
         speech = coin_name + " is  ₩" + bithumb_price + "at " + exchange
-    elif exchange == "Coinone":
+    elif exchange == "coinone":
         speech = coin_name + " is  ₩" + coinone_price + "at " + exchange
     
     res = {
