@@ -125,7 +125,7 @@ def coinPremiumQuery(req):
     #coins listed in Coinone and  Bithumb
     coinone_coins = ['BTC', 'BCH', 'ETH', 'ETC', 'XRP', 'QTUM', 'MIOTA', 'LTC']
     bithumb_coins = ['BTC', 'ETH', 'DASH', 'LTC', 'ETC', 'XRP', 'BCH', 'XMR', 'ZEC', 'QTUM', 'BTG']
-    
+    coin_symbol = "MIOTA"
     if (coin_symbol in coinone_coins) and (coin_symbol in bithumb_coins):
         speech = "Premium for " + coin_name + " is " + coin_coinone_premium + "% (for Coinone) and " + coin_bithumb_premium + "% (for Bithumb)"
     elif (coin_symbol in coinone_coins) and (coin_symbol not in bithumb_coins):
@@ -164,11 +164,11 @@ def exchangeQuery(req):
     bitfinex_price = bf['last_price']
     coinone_price = co['last']
     
-    if exchange == "bitfinex":
+    if exchange == "Bitfinex":
         speech = coin_name + " is  $" + bitfinex_price + "at " + exchange
-    elif exchange == "bithumb":
+    elif exchange == "Bithumb":
         speech = coin_name + " is  ₩" + bithumb_price + "at " + exchange
-    elif exchange == "coinone":
+    elif exchange == "Coinone":
         speech = coin_name + " is  ₩" + coinone_price + "at " + exchange
     
     res = {
