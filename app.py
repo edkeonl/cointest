@@ -108,11 +108,11 @@ def coinPremiumQuery(req):
     co = coinoneParameters(coin_symbol)
     
     bithumb_price = float(bt['average_price'])
-    bitfinex_price = bf['last_price']
+    bitfinex_price = float(bf['last_price'])
     coinone_price = float(co['last'])
     
     #convert bitfinex price from USD to KRW
-    bitfinex_price_KRW = CurrencyConverter(float(bitfinex_price), 'USDtoKRW')
+    bitfinex_price_KRW = CurrencyConverter(bitfinex_price, 'USDtoKRW')
     
     coin_coinone_premium = ((coinone_price / bitfinex_price_KRW) - 1.00)*100
     coin_coinone_premium = str(round(coin_coinone_premium, 2))
@@ -161,11 +161,11 @@ def exchangeQuery(req):
     bitfinex_price = bf['last_price']
     coinone_price = co['last']
     
-    if exchange == "Bitfinex":
+    if exchange == "bitfinex":
         speech = coin_name + " is  $" + bitfinex_price + "at " + exchange
-    elif exchange == "Bithumb":
+    elif exchange == "bithumb":
         speech = coin_name + " is  ₩" + bithumb_price + "at " + exchange
-    elif exchange == "Coinone":
+    elif exchange == "coinone":
         speech = coin_name + " is  ₩" + coinone_price + "at " + exchange
     
     res = {
