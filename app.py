@@ -106,11 +106,10 @@ def coinPremiumQuery(req):
     
     bt = bithumbParameters(coin_symbol)
     bf = bitfinexParameters(coin_symbol)
+    co = coinoneParameters(coin_symbol)
     
     bithumb_price = float(bt['average_price'])
     bitfinex_price = bf['last_price']
-    
-    co = coinoneParameters(coin_symbol)
     coinone_price = float(co['last'])
 
     #convert bitfinex price from USD to KRW
