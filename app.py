@@ -128,10 +128,10 @@ def coinPremiumQuery(req):
     
     if (coin_symbol in coinone_coins) and (coin_symbol in bithumb_coins):
         speech = "Premium for " + coin_name + " is " + coin_coinone_premium + "% (for Coinone) and " + coin_bithumb_premium + "% (for Bithumb)"
-    elif (coin_symbol in coinone_coins) and (coin_symbol not in bithumb_coins):
-        speech = "Premium for " + coin_name + " is " + coin_coinone_premium + "% (for Coinone)"
-    elif (coin_symbol not in coinone_coins) and (coin_symbol in bithumb_coins):
-        speech = "Premium for " + coin_name + " is " + coin_bithumb_premium + "% (for Bithumb)"
+    #elif (coin_symbol in coinone_coins) and (coin_symbol not in bithumb_coins):
+    #    speech = "Premium for " + coin_name + " is " + coin_coinone_premium + "% (for Coinone)"
+    #elif (coin_symbol not in coinone_coins) and (coin_symbol in bithumb_coins):
+    #    speech = "Premium for " + coin_name + " is " + coin_bithumb_premium + "% (for Bithumb)"
     else:
         speech = coin_name + "does not exist in Coinone or Bithumb"
     
