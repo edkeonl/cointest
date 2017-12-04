@@ -1,21 +1,3 @@
-Skip to content
-This repository
-Search
-Pull requests
-Issues
-Marketplace
-Explore
- @edkeonl
- Sign out
- Watch 0
-  Star 0  Fork 0 edkeonl/cointest
- Code  Issues 0  Pull requests 0  Projects 0  Wiki  Insights  Settings
-Tree: cb58573979 Find file Copy pathcointest/app.py
-cb58573  23 hours ago
-@edkeonl edkeonl Add files via upload
-1 contributor
-RawBlameHistory      
-266 lines (213 sloc)  8.87 KB
 #!/usr/bin/env python
 
 import urllib.request
