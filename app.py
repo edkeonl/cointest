@@ -210,24 +210,8 @@ def arbitrageQuery(req):
     coinone_coins = ['BTC', 'BCH', 'ETH', 'ETC', 'XRP', 'QTUM', 'MIOTA', 'LTC']
     bithumb_coins = ['BTC', 'ETH', 'DASH', 'LTC', 'ETC', 'XRP', 'BCH', 'XMR', 'ZEC', 'QTUM', 'BTG']
     
-    if (coin_symbol in bithumb_coins) and (coin_symbol in coinone_coins):
-        bt = bithumbParameters(coin_symbol)
-        bithumb_price = float(bt['average_price'])
-        
-        co = coinoneParameters(coin_symbol)
-        coinone_price = float(co['last'])
-            
-        #compare between exchanges 
-        if (bithumb_price >= coinone_price):
-            coin_premium = (bithumb_price/coinone_price) - 1.00)*100
-            coin_premium = str(round(coin_premium, 2))
-            speech = "[Coinone -> Bithumb] : Premium for " + coin_name + " is " + coin_premium + "%"
-        else:
-            coin_premium = (coinone_price/bithumb_price) - 1.00)*100
-            coin_premium = str(round(coin_premium, 2))
-            speech = "[Bithumb -> Coinone] : Premium for " + coin_name + " is " + coin_premium + "%"
-    else:
-        speech = coin_name + " does not exist in Coinone or Bithumb"
+    
+    speech = coin_name + " does not exist in Coinone or Bithumb"
                 
     res = {
         "speech": speech,
