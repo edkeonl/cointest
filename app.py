@@ -127,8 +127,7 @@ def coinPremiumQuery(req):
                 coin_coinone_premium = ((coinone_price / bitfinex_price_KRW) - 1.00)*100
                 coin_coinone_premium = str(round(coin_coinone_premium, 2))
                 
-                speech = "Premium for nothing" 
-                #+ coin_name + " is " + coin_coinone_premium + "% (for Coinone) and " + coin_bithumb_premium + "% (for Bithumb)"
+                speech = "Premium for " + coin_name + " is " + coin_coinone_premium + "% (for Coinone) and " + coin_bithumb_premium + "% (for Bithumb)"
             else:
                 
                 speech = "Premium for " + coin_name + " is " + coin_bithumb_premium + "% (for Bithumb)"
@@ -238,7 +237,7 @@ def coinoneParameters(type):
 
 def bitfinexParameters(type):
     if (type == 'MIOTA'):
-        type = 'IOTA'
+        type = 'IOT'
 
     bitfinex_b_url = "https://api.bitfinex.com/v1/pubticker/"
     bitfinex_price_t_url = bitfinex_b_url + type + "usd"
