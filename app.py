@@ -220,11 +220,11 @@ def arbitrageQuery(req):
             
             #compare between exchanges 
             if (bithumb_price >= coinone_price):
-                coin_premium = (bithumb_price/coinone_price) - 1.00)*100
+                coin_premium = ((bithumb_price/coinone_price) - 1.00)*100
                 coin_premium = str(round(coin_premium, 2))
                 speech = "[Coinone -> Bithumb] : Premium for " + coin_name + " is " + coin_premium + "%"
             else:
-                coin_premium = (coinone_price/bithumb_price) - 1.00)*100
+                coin_premium = ((coinone_price/bithumb_price) - 1.00)*100
                 coin_premium = str(round(coin_premium, 2))
                 speech = "[Bithumb -> Coinone] : Premium for " + coin_name + " is " + coin_premium + "%"
         else:
