@@ -182,6 +182,8 @@ def exchangeQuery(req):
         co = coinoneParameters(coin_symbol)
         coinone_price = co['last']
         speech = coin_name + " is  ₩" + coinone_price + "at " + exchange
+    else:
+        speech = 'Wrong input'
     
     res = {
         "speech": speech,
@@ -198,15 +200,15 @@ def arbitrageQuery(req):
     parameters = result.get("parameters")
     coin_type = parameters.get("cryptocurrency")
     
-    #coins listed in Coinone and  Bithumb
-    coinone_coins = ['BTC', 'BCH', 'ETH', 'ETC', 'XRP', 'QTUM', 'MIOTA', 'LTC']
-    bithumb_coins = ['BTC', 'ETH', 'DASH', 'LTC', 'ETC', 'XRP', 'BCH', 'XMR', 'ZEC', 'QTUM', 'BTG']
-    
     cmc = coinmarketcapParameters(coin_type)
     
     #define coin market cap parameters 
     coin_name = str(cmc['name'])
     coin_symbol = str(cmc['symbol'])
+    
+    #coins listed in Coinone and  Bithumb
+    coinone_coins = ['BTC', 'BCH', 'ETH', 'ETC', 'XRP', 'QTUM', 'MIOTA', 'LTC']
+    bithumb_coins = ['BTC', 'ETH', 'DASH', 'LTC', 'ETC', 'XRP', 'BCH', 'XMR', 'ZEC', 'QTUM', 'BTG']
     
     if (coin_symbol in bithumb_coins) and (coin_symbol in coinone_coins):
         bt = bithumbParameters(coin_symbol)
