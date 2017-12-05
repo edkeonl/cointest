@@ -214,6 +214,9 @@ def coinmarketcapParameters(type):
     return res
     
 def coinoneParameters(type):
+    if (type == 'MIOTA'):
+        type = 'IOTA'
+        
     coinone_price_b_url = "https://api.coinone.co.kr/ticker/?currency="
     coinone_price_t_url = coinone_price_b_url + type
     coinone_price_url = urllib.request.urlopen(coinone_price_t_url).read()
