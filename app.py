@@ -174,15 +174,18 @@ def exchangeQuery(req):
     if exchange_type == "Bitfinex":
         bf = bitfinexParameters(coin_symbol)
         bitfinex_price = bf['last_price']
-        speech = coin_name + " is  $" + bitfinex_price + "at " + exchange_type
+        bitfinex_price = str(round(bitfinex_price, 2))
+        speech = coin_name + " is  $" + bitfinex_price + " at " + exchange_type
     elif exchange_type == "Bithumb":
         bt = bithumbParameters(coin_symbol)
         bithumb_price = bt['average_price']
-        speech = coin_name + " is  ₩" + bithumb_price + "at " + exchange_type
+        bithumb_price = str(round(bithumb_price, 2))
+        speech = coin_name + " is  ₩" + bithumb_price + " at " + exchange_type
     elif exchange_type == "Coinone":
         co = coinoneParameters(coin_symbol)
         coinone_price = co['last']
-        speech = coin_name + " is  ₩" + coinone_price + "at " + exchange_type
+        coinone_price = str(round(coinone_price, 2))
+        speech = coin_name + " is  ₩" + coinone_price + " at " + exchange_type
     
     res = {
         "speech": speech,
