@@ -162,28 +162,26 @@ def coinPremiumQuery(req):
 def exchangeQuery(req):
     result = req.get("result")
     parameters = result.get("parameters")
-    exchange = parameters.get("crytpo_exchange")
+    exchange_type = parameters.get("crytpo_exchange")
     coin_type = parameters.get("cryptocurrency")
     
     cmc = coinmarketcapParameters(coin_type)
 
     #define coin market cap parameters 
     coin_symbol = str(cmc['symbol'])
-    
-    bt = bithumbParameters(coin_symbol)
-    bf = bitfinexParameters(coin_symbol)
-    co = coinoneParameters(coin_symbol)
-    
-    bithumb_price = bt['average_price']
-    bitfinex_price = bf['last_price']
-    coinone_price = co['last']
-    
-    if exchange == "Bitfinex":
-        speech = coin_name + " is  $" + bitfinex_price + "at " + exchange
-    elif exchange == "Bithumb":
-        speech = coin_name + " is  ₩" + bithumb_price + "at " + exchange
-    elif exchange == "Coinone":
-        speech = coin_name + " is  ₩" + coinone_price + "at " + exchange
+
+    if exchange_type == "Bitfinex":
+        bf = bitfinexParameters(coin_symbol)
+        bitfinex_price = bf['last_price']
+        speech = coin_name + " is  $" + bitfinex_price + "at " + exchange_type
+    elif exchange_type == "Bithumb":
+        bt = bithumbParameters(coin_symbol)
+        bithumb_price = bt['average_price']
+        speech = coin_name + " is  ₩" + bithumb_price + "at " + exchange_type
+    elif exchange_type == "Coinone":
+        co = coinoneParameters(coin_symbol)
+        coinone_price = co['last']
+        speech = coin_name + " is  ₩" + coinone_price + "at " + exchange_type
     
     res = {
         "speech": speech,
