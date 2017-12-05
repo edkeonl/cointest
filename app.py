@@ -128,10 +128,10 @@ def coinPremiumQuery(req):
                 coin_coinone_premium = ((coinone_price / bitfinex_price_KRW) - 1.00)*100
                 coin_coinone_premium = str(round(coin_coinone_premium, 2))
                 
-                speech = "Premium for" + coin_name + " is " + coin_coinone_premium + "% (for Coinone) and " + coin_bithumb_premium + "% (for Bithumb)"
+                speech = "Premium for " + coin_name + " is " + coin_coinone_premium + "% (for Coinone) and " + coin_bithumb_premium + "% (for Bithumb)"
             else:
                 
-                speech = "Premium for" + coin_name + " is " + coin_bithumb_premium + "% (for Bithumb)"
+                speech = "Premium for " + coin_name + " is " + coin_bithumb_premium + "% (for Bithumb)"
             
         else:
             if (coin_symbol in coinone_coins):
@@ -139,9 +139,12 @@ def coinPremiumQuery(req):
                 coinone_price = float(co['last'])
                 coin_coinone_premium = ((coinone_price / bitfinex_price_KRW) - 1.00)*100
                 coin_coinone_premium = str(round(coin_coinone_premium, 2))
-                speech = "Premium for" + coin_name + " is " + coin_coinone_premium + "% (for Coinone)"
+                speech = "Premium for " + coin_name + " is " + coin_coinone_premium + "% (for Coinone)"
+            else:
+                speech = coin_name + " does not exist in Coinone or Bithumb"
+                
     else:
-        speech = coin_name + " does not exist in Coinone or Bithumb"    
+        speech = coin_name + " does not exist in Bitfinex"    
         
     res = {
         "speech": speech,
