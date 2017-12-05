@@ -168,6 +168,7 @@ def exchangeQuery(req):
     cmc = coinmarketcapParameters(coin_type)
 
     #define coin market cap parameters 
+    coin_name = str(cmc['name'])
     coin_symbol = str(cmc['symbol'])
 
     if exchange_type == "Bitfinex":
