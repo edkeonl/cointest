@@ -109,7 +109,7 @@ def coinPremiumQuery(req):
     bithumb_coins = ['BTC', 'ETH', 'DASH', 'LTC', 'ETC', 'XRP', 'BCH', 'XMR', 'ZEC', 'QTUM', 'BTG']
     bitfinex_coins = ['BTC', 'BCH', 'ETH', 'ETC', 'ZEC', 'LTC', 'MIOTA', 'USDT', 'XMR', 'XRP', 'DASH', 'EOS', 'NEO', 'QTUM']
     
-    if (coin_symbol in bitfinex_coins)
+    if (coin_symbol in bitfinex_coins):
         bf = bitfinexParameters(coin_symbol)
         bitfinex_price = bf['last_price']
         
@@ -118,6 +118,7 @@ def coinPremiumQuery(req):
         if (coin_symbol in bithumb_coins):
             bt = bithumbParameters(coin_symbol)
             bithumb_price = float(bt['average_price'])
+            
             coin_bithumb_premium = ((bithumb_price / bitfinex_price_KRW) - 1.00)*100
             coin_bithumb_premium = str(round(coin_bithumb_premium, 2))
             
@@ -129,10 +130,16 @@ def coinPremiumQuery(req):
                 
                 speech = "Premium for" + coin_name + " is " + coin_coinone_premium + "% (for Coinone) and " + coin_bithumb_premium + "% (for Bithumb)"
             else:
+                
                 speech = "Premium for" + coin_name + " is " + coin_bithumb_premium + "% (for Bithumb)"
             
         else:
-            speech = "Premium for" + coin_name + " is " + coin_coinone_premium + "% (for Coinone)"
+            if (coin_symbol in coinone_coins):
+                co = coinoneParameters(coin_symbol)
+                coinone_price = float(co['last'])
+                coin_coinone_premium = ((coinone_price / bitfinex_price_KRW) - 1.00)*100
+                coin_coinone_premium = str(round(coin_coinone_premium, 2))
+                speech = "Premium for" + coin_name + " is " + coin_coinone_premium + "% (for Coinone)"
     else:
         speech = coin_name + " does not exist in Coinone or Bithumb"    
         
