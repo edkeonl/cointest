@@ -237,6 +237,9 @@ def coinoneParameters(type):
     return res
 
 def bitfinexParameters(type):
+    if (type == 'MIOTA'):
+        type = 'IOTA'
+
     bitfinex_b_url = "https://api.bitfinex.com/v1/pubticker/"
     bitfinex_price_t_url = bitfinex_b_url + type + "usd"
     bitfinex_price_url = urllib.request.urlopen(bitfinex_price_t_url).read()
