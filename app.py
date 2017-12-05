@@ -23,8 +23,6 @@ def webhook():
         res = coinPremiumQuery(req)
     elif req.get("result").get("action") == "exchange_data":
         res = exchangeQuery(req)
-    elif req.get("result").get("action") == "exchange_arbitrage":
-        res = arbitrageQuery(req)
 
     res = json.dumps(res, indent=4)
 
@@ -165,25 +163,25 @@ def exchangeQuery(req):
     exchange = parameters.get("crytpo_exchange")
     coin_type = parameters.get("cryptocurrency")
     
-    #cmc = coinmarketcapParameters(coin_type)
+    cmc = coinmarketcapParameters(coin_type)
 
     #define coin market cap parameters 
-    #coin_symbol = str(cmc['symbol'])
+    coin_symbol = str(cmc['symbol'])
     
-    #if exchange == "Bitfinex":
-    #    bf = bitfinexParameters(coin_symbol)
-    #    bitfinex_price = bf['last_price']
-    #    speech = coin_name + " is  $" + bitfinex_price + "at " + exchange
-    #elif exchange == "Bithumb":
-    #    bt = bithumbParameters(coin_symbol)
-    #    bithumb_price = bt['average_price']
-    #    speech = coin_name + " is  ₩" + bithumb_price + "at " + exchange
-    #elif exchange == "Coinone":
-    #    co = coinoneParameters(coin_symbol)
-    #    coinone_price = co['last']
-    #    speech = coin_name + " is  ₩" + coinone_price + "at " + exchange
-    #else:
-    speech = 'Wrong input'
+    bt = bithumbParameters(coin_symbol)
+    bf = bitfinexParameters(coin_symbol)
+    co = coinoneParameters(coin_symbol)
+    
+    bithumb_price = bt['average_price']
+    bitfinex_price = bf['last_price']
+    coinone_price = co['last']
+    
+    if exchange == "Bitfinex":
+        speech = coin_name + " is  $" + bitfinex_price + "at " + exchange
+    elif exchange == "Bithumb":
+        speech = coin_name + " is  ₩" + bithumb_price + "at " + exchange
+    elif exchange == "Coinone":
+        speech = coin_name + " is  ₩" + coinone_price + "at " + exchange
     
     res = {
         "speech": speech,
@@ -194,48 +192,6 @@ def exchangeQuery(req):
     }
 
     return res
-    
-def arbitrageQuery(req):
-    result = req.get("result")
-    parameters = result.get("parameters")
-    coin_type = parameters.get("cryptocurrency")
-    
-    cmc = coinmarketcapParameters(coin_type)
-    
-    #define coin market cap parameters 
-    coin_name = str(cmc['name'])
-    coin_symbol = str(cmc['symbol'])
-    
-    #coins listed in Coinone and  Bithumb
-    coinone_coins = ['BTC', 'BCH', 'ETH', 'ETC', 'XRP', 'QTUM', 'MIOTA', 'LTC']
-    bithumb_coins = ['BTC', 'ETH', 'DASH', 'LTC', 'ETC', 'XRP', 'BCH', 'XMR', 'ZEC', 'QTUM', 'BTG']
-    
-    if (coin_symbol in bithumb_coins) and (coin_symbol in coinone_coins):
-        bt = bithumbParameters(coin_symbol)
-        bithumb_price = float(bt['average_price'])
-        
-        co = coinoneParameters(coin_symbol)
-        coinone_price = float(co['last'])
-            
-        #compare between exchanges 
-        if (bithumb_price >= coinone_price):
-            coin_premium = (bithumb_price/coinone_price) - 1.00)*100
-            coin_premium = str(round(coin_premium, 2))
-            speech = "[Coinone -> Bithumb] : Premium for " + coin_name + " is " + coin_premium + "%"
-        else:
-            coin_premium = (coinone_price/bithumb_price) - 1.00)*100
-            coin_premium = str(round(coin_premium, 2))
-            speech = "[Bithumb -> Coinone] : Premium for " + coin_name + " is " + coin_premium + "%"
-    else:
-        speech = coin_name + " does not exist in Coinone or Bithumb"
-                
-    res = {
-        "speech": speech,
-        "displayText": speech,
-        "data": {},
-        "contextOut": [],
-        "source": "nothing"
-    }     
 
 def coinmarketcapParameters(type):
     coinmarketcap_b_url = "https://api.coinmarketcap.com/v1/ticker/"
