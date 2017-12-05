@@ -165,25 +165,25 @@ def exchangeQuery(req):
     exchange = parameters.get("crytpo_exchange")
     coin_type = parameters.get("cryptocurrency")
     
-    cmc = coinmarketcapParameters(coin_type)
+    #cmc = coinmarketcapParameters(coin_type)
 
     #define coin market cap parameters 
-    coin_symbol = str(cmc['symbol'])
+    #coin_symbol = str(cmc['symbol'])
     
-    if exchange == "Bitfinex":
-        bf = bitfinexParameters(coin_symbol)
-        bitfinex_price = bf['last_price']
-        speech = coin_name + " is  $" + bitfinex_price + "at " + exchange
-    elif exchange == "Bithumb":
-        bt = bithumbParameters(coin_symbol)
-        bithumb_price = bt['average_price']
-        speech = coin_name + " is  ₩" + bithumb_price + "at " + exchange
-    elif exchange == "Coinone":
-        co = coinoneParameters(coin_symbol)
-        coinone_price = co['last']
-        speech = coin_name + " is  ₩" + coinone_price + "at " + exchange
-    else:
-        speech = 'Wrong input'
+    #if exchange == "Bitfinex":
+    #    bf = bitfinexParameters(coin_symbol)
+    #    bitfinex_price = bf['last_price']
+    #    speech = coin_name + " is  $" + bitfinex_price + "at " + exchange
+    #elif exchange == "Bithumb":
+    #    bt = bithumbParameters(coin_symbol)
+    #    bithumb_price = bt['average_price']
+    #    speech = coin_name + " is  ₩" + bithumb_price + "at " + exchange
+    #elif exchange == "Coinone":
+    #    co = coinoneParameters(coin_symbol)
+    #    coinone_price = co['last']
+    #    speech = coin_name + " is  ₩" + coinone_price + "at " + exchange
+    #else:
+    speech = 'Wrong input'
     
     res = {
         "speech": speech,
@@ -219,13 +219,13 @@ def arbitrageQuery(req):
             
         #compare between exchanges 
         if (bithumb_price >= coinone_price):
-            premium = (coinone_price/bithumb_price) - 1.00)*100
-            premium = str(round(premium, 2))
-            speech = "[Coinone -> Bithumb] : Premium for " + coin_name + " is " + premium + "%"
+            coin_premium = (bithumb_price/coinone_price) - 1.00)*100
+            coin_premium = str(round(coin_premium, 2))
+            speech = "[Coinone -> Bithumb] : Premium for " + coin_name + " is " + coin_premium + "%"
         else:
-            premium = (bithumb_price/coinone_price) - 1.00)*100
-            premium = str(round(premium, 2))
-            speech = "[Bithumb -> Coinone] : Premium for " + coin_name + " is " + premium + "%"
+            coin_premium = (coinone_price/bithumb_price) - 1.00)*100
+            coin_premium = str(round(coin_premium, 2))
+            speech = "[Bithumb -> Coinone] : Premium for " + coin_name + " is " + coin_premium + "%"
     else:
         speech = coin_name + " does not exist in Coinone or Bithumb"
                 
