@@ -241,6 +241,10 @@ def coinoneParameters(type):
 def bitfinexParameters(type):
     if (type == 'MIOTA'):
         type = 'IOT'
+    elif (type == 'QTUM'):
+        type = 'QTM'
+    elif (type == 'DASH'):
+        type = 'DSH'
 
     bitfinex_b_url = "https://api.bitfinex.com/v1/pubticker/"
     bitfinex_price_t_url = bitfinex_b_url + type + "usd"
