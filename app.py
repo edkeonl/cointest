@@ -252,7 +252,7 @@ def convertQuery(req):
     
     converted_price = CurrencyConverter(price, b_currency, a_currency)
     
-    speech = price + b_currency + " is approximately equal to " + a_currency
+    speech = price + b_currency + " is approximately equal to " + converted_price + a_currency
     
     res = {
         "speech": speech,
@@ -262,8 +262,7 @@ def convertQuery(req):
         "source": "nothing"
     }
     
-    return res 
-
+    return res
 
 def coinmarketcapParameters(type):
     coinmarketcap_b_url = "https://api.coinmarketcap.com/v1/ticker/"
@@ -360,11 +359,11 @@ def bithumbParameters(type):
 def CurrencyConverter(price, from_currency, to_currency):
 
     currency_b_url = 'https://api.fixer.io/latest?base='
-    currency_t_url = currency_b_url + to_currency
+    currency_t_url = currency_b_url + from_currency
     currency_price_url = urllib.request.urlopen(currency_t_url).read()
     currency_price_data = json.loads(currency_price_url)
     
-    currency_ratio = currency_price_data['rates'][from_currency]
+    currency_ratio = currency_price_data['rates'][to_currency]
     converted_price = price*currency_ratio
     
     return converted_price
