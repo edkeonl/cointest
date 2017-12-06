@@ -252,6 +252,8 @@ def convertQuery(req):
     
     converted_price = CurrencyConverter(price, b_currency, a_currency)
     
+    speech = price + b_currency + " is approximately equal to " + a_currency
+    
     res = {
         "speech": speech,
         "displayText": speech,
@@ -352,11 +354,11 @@ def bithumbParameters(type):
         "buy_price"     : bithumb_price_data['data']['buy_price'],
         "sell_price"    : bithumb_price_data['data']['sell_price']
     }
-    return res    
+    return res
 
 
 def CurrencyConverter(price, from_currency, to_currency):
-    # 1 USD = 1,082.48 KRW
+
     currency_b_url = 'https://api.fixer.io/latest?base='
     currency_t_url = currency_b_url + to_currency
     currency_price_url = urllib.request.urlopen(currency_t_url).read()
