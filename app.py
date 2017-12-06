@@ -25,6 +25,8 @@ def webhook():
         res = exchangeQuery(req)
     elif req.get("result").get("action") == "exchange_arbitrage":
         res = arbitrageQuery(req)
+    elif req.get("result").get("action") == "currency_convert":    
+        res = convertQuery(req)
 
     res = json.dumps(res, indent=4)
 
@@ -115,7 +117,7 @@ def coinPremiumQuery(req):
         bitfinex_price = bf['last_price']
         
         #convert bitfinex price from USD to KRW
-        bitfinex_price_KRW = CurrencyConverter(float(bitfinex_price), 'USDtoKRW')
+        bitfinex_price_KRW = CurrencyConverter(float(bitfinex_price), 'USD', 'KRW')
         if (coin_symbol in bithumb_coins):
             bt = bithumbParameters(coin_symbol)
             bithumb_price = float(bt['average_price'])
@@ -241,6 +243,26 @@ def arbitrageQuery(req):
     }
     return res
 
+def convertQuery(req):
+    result = req.get("result")
+    parameters = result.get("parameters")
+    b_currency = parameters.get("before_currency")
+    a_currency = parameters.get("after_currency")
+    price = parameters.get("number")
+    
+    converted_price = CurrencyConverter(price, b_currency, a_currency)
+    
+    res = {
+        "speech": speech,
+        "displayText": speech,
+        "data": {},
+        "contextOut": [],
+        "source": "nothing"
+    }
+    
+    return res 
+
+
 def coinmarketcapParameters(type):
     coinmarketcap_b_url = "https://api.coinmarketcap.com/v1/ticker/"
     coinmarketcap_t_url = coinmarketcap_b_url + type
@@ -333,11 +355,15 @@ def bithumbParameters(type):
     return res    
 
 
-def CurrencyConverter(price, currency):
+def CurrencyConverter(price, from_currency, to_currency):
     # 1 USD = 1,082.48 KRW
-    ratio_USDtoKRW = 1082.48
-    #if currency is 'USDtoKRW'
-    converted_price = price*ratio_USDtoKRW
+    currency_b_url = 'https://api.fixer.io/latest?base='
+    currency_t_url = currency_b_url + to_currency
+    currency_price_url = urllib.request.urlopen(currency_t_url).read()
+    currency_price_data = json.loads(currency_price_url)
+    
+    currency_ratio = currency_price_data['rates'][from_currency]
+    converted_price = price*currency_ratio
     
     return converted_price
 
