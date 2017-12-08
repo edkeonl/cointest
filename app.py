@@ -347,7 +347,7 @@ def korbitParameters(type):
     
     #define bitfinex parameters 
     res = {
-        "last": korbit_price_data['mid']
+        "last": korbit_price_data['last']
     }
     return res
         
