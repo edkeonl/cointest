@@ -371,10 +371,7 @@ def bithumbParameters(type):
         "buy_price"     : bithumb_price_data['data']['buy_price'],
         "sell_price"    : bithumb_price_data['data']['sell_price']
     }
-    return res
-
-
-https://api.korbit.co.kr/v1/ticker?currency_pair=btc_krw    
+    return res 
 
 def CurrencyConverter(price, from_currency, to_currency):
 
