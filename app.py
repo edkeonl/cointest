@@ -355,14 +355,13 @@ def bithumbParameters(type):
     }
     return res
 
+
 def CurrencyConverter(price, from_currency, to_currency):
 
     currency_b_url = 'https://api.fixer.io/latest?base='
     currency_t_url = currency_b_url + from_currency
     currency_price_url = urllib.request.urlopen(currency_t_url).read()
     currency_price_data = json.loads(currency_price_url)
-    
-    to_currency = 
     
     currency_ratio = currency_price_data['rates'][to_currency]
     converted_price = price*currency_ratio
