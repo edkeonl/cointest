@@ -187,12 +187,9 @@ def exchangeQuery(req):
         coinone_price = co['last']
         speech = coin_name + " is  ₩" + coinone_price + " at " + exchange_type
     elif exchange_type == "Korbit":
-        #kb = korbitParameters(coin_symbol)
-        #korbit_price = kb['last']
-        #speech = coin_name + " is  ₩" + korbit_price + " at " + exchange_type
-        co = coinoneParameters(coin_symbol)
-        coinone_price = co['last']
-        speech = coin_name + " is  ₩" + coinone_price + " at " + exchange_type
+        kb = korbitParameters(coin_symbol)
+        korbit_price = kb['last']
+        speech = coin_name + " is  ₩" + korbit_price + " at " + exchange_type
     
     res = {
         "speech": speech,
@@ -363,7 +360,23 @@ def bithumbParameters(type):
     return res
 
 def korbitParameters(type):
+    coinmarketcap_b_url = "https://api.coinmarketcap.com/v1/ticker/"
+    coinmarketcap_t_url = coinmarketcap_b_url + type
+    coinmarketcap_t_data = urllib.request.urlopen(coinmarketcap_t_url).read()
+    coinmarketcap_data = json.loads(coinmarketcap_t_data)
     
+    #define coin market cap parameters 
+    res = {
+        "name": coinmarketcap_data[0]['name'],
+        "symbol": coinmarketcap_data[0]['symbol'],
+        "rank": coinmarketcap_data[0]['rank'],
+        "price_usd": coinmarketcap_data[0]['price_usd'],
+        "24h_volume_usd": coinmarketcap_data[0]['24h_volume_usd'],
+        "market_cap_usd": coinmarketcap_data[0]['market_cap_usd'],
+        "percent_change_1h": coinmarketcap_data[0]['percent_change_1h'],
+        "percent_change_24h": coinmarketcap_data[0]['percent_change_24h'],
+        "percent_change_7d": coinmarketcap_data[0]['percent_change_7d'],
+    }
     #korbit_b_url = "https://api.korbit.co.kr/v1/ticker?currency_pair="
     #type = type.lower()
     #korbit_price_t_url = "https://api.korbit.co.kr/v1/ticker?currency_pair=btc_krw"
@@ -375,7 +388,7 @@ def korbitParameters(type):
     #res = {
     #    "last": korbit_price_data['last']
     #}
-    res = "150,000"
+    #res = "150,000"
     return res
 
 def CurrencyConverter(price, from_currency, to_currency):
