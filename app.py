@@ -187,8 +187,9 @@ def exchangeQuery(req):
         coinone_price = co['last']
         speech = coin_name + " is  ₩" + coinone_price + " at " + exchange_type
     elif exchange_type == "Korbit":
-        kb = korbitParameters(coin_symbol)
-        korbit_price = kb['last']
+        #kb = korbitParameters(coin_symbol)
+        #korbit_price = kb['last']
+        korbit_price = korbitParameters(coin_symbol)
         #speech = coin_name + " is  ₩" + korbit_price + " at " + exchange_type
         speech = 'Korbit price is xx KRW'
     
@@ -357,7 +358,7 @@ def bithumbParameters(type):
         "volume_7day"   : bithumb_price_data['data']['volume_7day'],
         "buy_price"     : bithumb_price_data['data']['buy_price'],
         "sell_price"    : bithumb_price_data['data']['sell_price']
-    }
+    } 
     return res
 
 def korbitParameters(type):
@@ -369,9 +370,8 @@ def korbitParameters(type):
     korbit_price_data = json.loads(korbit_price_url)
     
     #define bitfinex parameters 
-    res = {
-        "last": korbit_price_data['last']
-    }
+    res = korbit_price_data['last']
+    
     return res
 
 def CurrencyConverter(price, from_currency, to_currency):
