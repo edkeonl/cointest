@@ -180,15 +180,14 @@ def exchangeQuery(req):
     elif exchange_type == "Bithumb":
         bt = bithumbParameters(coin_symbol)
         bithumb_price = bt['average_price']
-        #bithumb_price = str(round(bithumb_price, 2))
         speech = coin_name + " is  ₩" + bithumb_price + " at " + exchange_type
     elif exchange_type == "Coinone":
         co = coinoneParameters(coin_symbol)
         coinone_price = co['last']
         speech = coin_name + " is  ₩" + coinone_price + " at " + exchange_type
     elif exchange_type == "Korbit":
-        kb = korbitParameters(coin_symbol)
-        korbit_price = kb['last']
+        kbt = korbitParameters(coin_symbol)
+        korbit_price = kbt['last']
         speech = coin_name + " is  ₩" + korbit_price + " at " + exchange_type
             
     res = {
