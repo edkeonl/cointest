@@ -53,7 +53,9 @@ def makeCoinQuery(req):
     if coin_symbol in coinone_coins:
         co = coinoneParameters(coin_symbol)
         coinone_price = co['last']
-        speech = coin_name + " is currently $" + coin_price + " Coinone is currently ₩" + coinone_price
+        kb = korbitParameters(coin_symbol)
+        korbit_price = kb['last']
+        speech = coin_name + " is currently $" + coin_price + " Coinone is currently ₩" + coinone_price + "; Korbit is currently ₩" + korbit_price
     else:
         speech = coin_name + " is currently " + coin_price + " US Dollars"
     
@@ -186,7 +188,7 @@ def exchangeQuery(req):
         co = coinoneParameters(coin_symbol)
         coinone_price = co['last']
         speech = coin_name + " is  ₩" + coinone_price + " at " + exchange_type
-    else: #elif exchange_type == "Korbit":
+    elif exchange_type == "Korbit":
         kb = korbitParameters(coin_symbol)
         korbit_price = kb['last']
         speech = coin_name + " is  ₩" + korbit_price + " at " + exchange_type
