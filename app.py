@@ -364,7 +364,7 @@ def korbitParameters(type):
     type = type.lower()
     korbit_price_t_url = korbit_b_url + type + "_krw"
     korbit_price_url = urllib.request.urlopen(korbit_price_t_url).read()
-    korbit_price_data = json.loads(korbit_price_t_url)
+    korbit_price_data = json.loads(korbit_price_url)
     
     #define bitfinex parameters 
     res = {
