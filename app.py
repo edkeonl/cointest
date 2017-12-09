@@ -187,9 +187,12 @@ def exchangeQuery(req):
         coinone_price = co['last']
         speech = coin_name + " is  ₩" + coinone_price + " at " + exchange_type
     elif exchange_type == "Korbit":
-        kb = korbitParameters(coin_symbol)
-        korbit_price = kb['last']
-        speech = coin_name + " is  ₩" + korbit_price + " at " + exchange_type
+        #kb = korbitParameters(coin_symbol)
+        #korbit_price = kb['last']
+        #speech = coin_name + " is  ₩" + korbit_price + " at " + exchange_type
+        co = coinoneParameters(coin_symbol)
+        coinone_price = co['last']
+        speech = coin_name + " is  ₩" + coinone_price + " at " + exchange_type
     
     res = {
         "speech": speech,
