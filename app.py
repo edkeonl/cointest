@@ -363,16 +363,16 @@ def korbitParameters(type):
     #korbit_b_url = "https://api.korbit.co.kr/v1/ticker?currency_pair="
     #type = type.lower()
     a = type
-    #korbit_price_t_url = "https://api.korbit.co.kr/v1/ticker?currency_pair=btc_krw"
-    #korbit_b_url + type + "_krw"
-    #korbit_price_url = urllib.request.urlopen(korbit_price_t_url).read()
-    #korbit_price_data = json.loads(korbit_price_url)
+    korbit_price_t_url = "https://api.korbit.co.kr/v1/ticker?currency_pair=btc_krw"
+    korbit_b_url + type + "_krw"
+    korbit_price_url = urllib.request.urlopen(korbit_price_t_url).read()
+    korbit_price_data = json.loads(korbit_price_url)
     
     #define bitfinex parameters 
     #res = {
     #    "last": korbit_price_data['last']
     #}
-    res = "150,000"
+    res = korbit_price_data['last']
     return res
 
 def CurrencyConverter(price, from_currency, to_currency):
