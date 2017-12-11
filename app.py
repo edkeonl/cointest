@@ -190,6 +190,10 @@ def exchangeQuery(req):
         kb = korbitParameters(coin_symbol)
         korbit_price = kb['last']
         speech = coin_name + " is  ₩" + korbit_price + " at " + exchange_type
+    elif exchange_type == "GDAX":
+        gx = GDAXParameters(coin_symbol)
+        GDAX_price = gx['price']
+        speech = coin_name + " is  $" + GDAX_price + " at " + exchange_type
             
     res = {
         "speech": speech,
@@ -377,6 +381,25 @@ def korbitParameters(type):
         "volume": korbit_price_data['volume']
     }
     return res
+
+#def CoincheckParameters(type)
+#https://coincheck.com/api/ticker
+
+def GDAXParameters(type)
+    GDAX_b_url = "https://api.gdax.com/products/"
+    GDAX_price_t_url = GDAX_b_url + type + "-USD/ticker"
+    GDAX_price_url = urllib.request.urlopen(GDAX_price_t_url).read()
+    GDAX_price_data = json.loads(GDAX_price_url)
+    
+    res = {
+        "price": GDAX_price_data['price'],
+        "size": GDAX_price_data['size'],
+        "bid": GDAX_price_data['bid'],
+        "ask": GDAX_price_data['ask'],
+        "volume": GDAX_price_data['volume']
+        }
+    return res
+
 
 def CurrencyConverter(price, from_currency, to_currency):
 
