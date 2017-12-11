@@ -385,7 +385,7 @@ def korbitParameters(type):
 #def CoincheckParameters(type)
 #https://coincheck.com/api/ticker
 
-def GDAXParameters(type)
+def GDAXParameters(type):
     GDAX_b_url = "https://api.gdax.com/products/"
     GDAX_price_t_url = GDAX_b_url + type + "-USD/ticker"
     GDAX_price_url = urllib.request.urlopen(GDAX_price_t_url).read()
