@@ -3,6 +3,7 @@
 import urllib.request
 import json
 import os
+from urllib.request import Request, urlopen
 
 from flask import Flask
 from flask import request
@@ -360,10 +361,10 @@ def bithumbParameters(type):
 
 def korbitParameters(type):
     korbit_b_url = "https://api.korbit.co.kr/v1/ticker/detailed?currency_pair="
-    type = 'btc'
-    #type.lower()
+    type = type.lower()
     korbit_price_t_url = korbit_b_url + type + "_krw"
-    korbit_price_url = urllib.request.urlopen(korbit_price_t_url).read()
+    korbit_price_t2_url = Request(korbit_price_t_url, headers={'User-Agent': 'Mozilla/5.0'})
+    korbit_price_url = urlopen(korbit_price_t2_url).read()
     korbit_price_data = json.loads(korbit_price_url)
     
     #define bitfinex parameters 
