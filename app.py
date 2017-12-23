@@ -226,33 +226,75 @@ def exchangeQuery(req):
     parameters = result.get("parameters")
     exchange_type = parameters.get("crytpo_exchange")
     coin_type = parameters.get("cryptocurrency")
+
+    if coin_type == 'All':
+        if exchange_type == 'Coinone':
+            coins = ['BTC', 'BCH', 'ETH', 'ETC', 'XRP', 'QTUM', 'MIOTA', 'LTC', 'BTG']
+        elif exchange_type == 'Bitfinex':
+            coins = ['BTC', 'BCH', 'ETH', 'ETC', 'ZEC', 'LTC', 'MIOTA', 'USDT', 'XMR', 'XRP', 'DASH', 'EOS', 'NEO', 'QTUM', 'BTG']
+        elif exchange_type == 'Bithumb':
+            coins = ['BTC', 'ETH', 'DASH', 'LTC', 'ETC', 'XRP', 'BCH', 'XMR', 'ZEC', 'QTUM', 'BTG', 'EOS']    
+            
+        speech = "Prices for " + exchange_type
     
-    cmc = coinmarketcapParameters(coin_type)
+        for coin in coins:
+            speech = speech + " \n "
+        
+            cmc = coinmarketcapParameters(coin)
 
+            #define coin market cap parameters 
+            coin_name = str(cmc['name'])
+            coin_symbol = str(cmc['symbol'])
+            
+            if exchange_type == "Bitfinex":
+                bf = bitfinexParameters(coin_symbol)
+                bitfinex_price = bf['last_price']
+                speech = speech + coin_name + ": $" + bitfinex_price
+            elif exchange_type == "Bithumb":
+                bt = bithumbParameters(coin_symbol)
+                bithumb_price = bt['average_price']
+                speech = speech + coin_name + ":  ₩" + bithumb_price
+            elif exchange_type == "Coinone":
+                co = coinoneParameters(coin_symbol)
+                coinone_price = co['last']
+                speech = speech + coin_name + ":  ₩" + coinone_price
+            #elif exchange_type == "Korbit":
+            #    kb = korbitParameters(coin_symbol)
+            #    korbit_price = kb['last']
+            #    speech = speech + coin_name + ":  ₩" + korbit_price
+            #elif exchange_type == "GDAX":
+            #    gx = GDAXParameters(coin_symbol)
+            #    GDAX_price = gx['price']
+            #    speech = speech + coin_name + ":  $" + GDAX_price
+    else:
+        cmc = coinmarketcapParameters(coin_type)
+        
+        coin_name = str(cmc['name'])
+        coin_symbol = str(cmc['symbol'])
+
+        if exchange_type == "Bitfinex":
+            bf = bitfinexParameters(coin_symbol)
+            bitfinex_price = bf['last_price']
+            speech = coin_name + " is  $" + bitfinex_price + " at " + exchange_type
+        elif exchange_type == "Bithumb":
+            bt = bithumbParameters(coin_symbol)
+            bithumb_price = bt['average_price']
+            speech = coin_name + " is  ₩" + bithumb_price + " at " + exchange_type
+        elif exchange_type == "Coinone":
+            co = coinoneParameters(coin_symbol)
+            coinone_price = co['last']
+            speech = coin_name + " is  ₩" + coinone_price + " at " + exchange_type
+        elif exchange_type == "Korbit":
+            kb = korbitParameters(coin_symbol)
+            korbit_price = kb['last']
+            speech = coin_name + " is  ₩" + korbit_price + " at " + exchange_type
+        elif exchange_type == "GDAX":
+            gx = GDAXParameters(coin_symbol)
+            GDAX_price = gx['price']
+            speech = coin_name + " is  $" + GDAX_price + " at " + exchange_type
+            
     #define coin market cap parameters 
-    coin_name = str(cmc['name'])
-    coin_symbol = str(cmc['symbol'])
-
-    if exchange_type == "Bitfinex":
-        bf = bitfinexParameters(coin_symbol)
-        bitfinex_price = bf['last_price']
-        speech = coin_name + " is  $" + bitfinex_price + " at " + exchange_type
-    elif exchange_type == "Bithumb":
-        bt = bithumbParameters(coin_symbol)
-        bithumb_price = bt['average_price']
-        speech = coin_name + " is  ₩" + bithumb_price + " at " + exchange_type
-    elif exchange_type == "Coinone":
-        co = coinoneParameters(coin_symbol)
-        coinone_price = co['last']
-        speech = coin_name + " is  ₩" + coinone_price + " at " + exchange_type
-    elif exchange_type == "Korbit":
-        kb = korbitParameters(coin_symbol)
-        korbit_price = kb['last']
-        speech = coin_name + " is  ₩" + korbit_price + " at " + exchange_type
-    elif exchange_type == "GDAX":
-        gx = GDAXParameters(coin_symbol)
-        GDAX_price = gx['price']
-        speech = coin_name + " is  $" + GDAX_price + " at " + exchange_type
+    
             
     res = {
         "speech": speech,
