@@ -261,7 +261,8 @@ def convertQuery(req):
     #converted_price = CurrencyConverter(1100, 'USD', 'KRW')
     #float(price), b_currency, a_currency)
     
-    speech = price + b_currency + " is approximately equal to xxx" + a_currency
+    
+    speech = b_currency + " is approximately equal to xxx" + a_currency
     
     res = {
         "speech": speech,
