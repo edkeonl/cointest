@@ -41,10 +41,8 @@ def menu(req):
     result = req.get("result")
     parameters = result.get("parameters")
     
-    #var textResponse = response.result.fulfillment.speech
-    #textResponse = textResponse.replace(/\\n/g, '\n')
+    speech = "Currently the supported GDAX, bitfinex, korbit, coinone, bithumb \n /(coin name or symbol): Current price of the specific coin \n coin name ex: Ripple; coin symbol: XRP \n /gimp (coin name or symbol): Premium between Bitfinex and Korean exchanges \n /(exchange name or abbrev) (coin name or symbol): Current price of the specific coin at the designated exchange \n exchange abbrev: gx(GDAX), bf(bitfinex), kb(korbit), co(coinone), bt(bithumb) \n /(coin name or symbol) (Period): Price change of the specific coin during the designated period \n Period: 1 hr, 24 hr, 7 days"    
     
-    speech = "Currently the supported GDAX, bitfinex, korbit, coinone, bithumb \n /gimp (coin이름): 한국과 bitfinex의 프리미엄 계산 \n /(exchange) (coin이름): 특정 exchange의 코인 가격 알려줌"
     res = {
         "speech": speech,
         "displayText": speech,
