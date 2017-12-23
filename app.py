@@ -180,7 +180,7 @@ def coinPremiumQuery(req):
         bitfinex_price_KRW = CurrencyConverter(float(bitfinex_price), 'USD', 'KRW')
         if (coin_symbol in bithumb_coins):
             bt = bithumbParameters(coin_symbol)
-            bithumb_price = float(bt['average_price'])
+            bithumb_price = float(bt['sell_price'])
             
             coin_bithumb_premium = ((bithumb_price / bitfinex_price_KRW) - 1.00)*100
             coin_bithumb_premium = str(round(coin_bithumb_premium, 2))
@@ -252,7 +252,7 @@ def exchangeQuery(req):
                 speech = speech + coin_name + ": $" + bitfinex_price
             elif exchange_type == "Bithumb":
                 bt = bithumbParameters(coin_symbol)
-                bithumb_price = bt['average_price']
+                bithumb_price = bt['sell_price']
                 speech = speech + coin_name + ":  ₩" + bithumb_price
             elif exchange_type == "Coinone":
                 co = coinoneParameters(coin_symbol)
@@ -278,7 +278,7 @@ def exchangeQuery(req):
             speech = coin_name + " is  $" + bitfinex_price + " at " + exchange_type
         elif exchange_type == "Bithumb":
             bt = bithumbParameters(coin_symbol)
-            bithumb_price = bt['average_price']
+            bithumb_price = bt['sell_price']
             speech = coin_name + " is  ₩" + bithumb_price + " at " + exchange_type
         elif exchange_type == "Coinone":
             co = coinoneParameters(coin_symbol)
@@ -323,7 +323,7 @@ def arbitrageQuery(req):
     
     if (coin_symbol in bithumb_coins):
         bt = bithumbParameters(coin_symbol)
-        bithumb_price = float(bt['average_price'])
+        bithumb_price = float(bt['sell_price'])
         
         if (coin_symbol in coinone_coins):
             co = coinoneParameters(coin_symbol)
