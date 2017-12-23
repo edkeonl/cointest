@@ -258,10 +258,10 @@ def convertQuery(req):
     a_currency = parameters.get("after_currency")
     price = parameters.get("number")
     
-    converted_price = CurrencyConverter(1100, 'USD', 'KRW')
+    #converted_price = CurrencyConverter(1100, 'USD', 'KRW')
     #float(price), b_currency, a_currency)
     
-    speech = price + b_currency + " is approximately equal to " + converted_price + a_currency
+    speech = price + b_currency + " is approximately equal to xxx" + a_currency
     
     res = {
         "speech": speech,
