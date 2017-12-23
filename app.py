@@ -54,7 +54,7 @@ def index_private(req):
     portfolio_string = "Portfolio for " + name_portfolio
     
     for coin in coins:
-        portfolio_string = portfolio_string + " /n"
+        portfolio_string = portfolio_string + " /n "
         
         cmc = coinmarketcapParameters(coin)
 
