@@ -49,7 +49,7 @@ def index_private(req):
     elif name_portfolio == 'Bongju':
         coins = ['litecoin', 'omisego', 'nem', 'dash', 'stellar', 'cardano', 'bitcoin', 'ripple', 'bitcoin-cash', 'qtum']
     elif name_portfolio == 'Sungwook':
-        coins = ['ripple', 'ripple', 'ripple']
+        coins = ['bitcoin', 'litecoin', 'ripple', 'ethereum', 'stellar', 'bitcoin-gold', 'omisego']
     
     portfolio_string = "Portfolio for " + name_portfolio
     
@@ -229,11 +229,11 @@ def exchangeQuery(req):
 
     if coin_type == 'All':
         if exchange_type == 'Coinone':
-            coins = ['BTC', 'BCH', 'ETH', 'ETC', 'XRP', 'QTUM', 'MIOTA', 'LTC', 'BTG']
+            coins = ['bitcoin', 'bitcoin-cash', 'ethereum', 'ethereum-classic', 'ripple', 'qtum', 'iota', 'litecoin', 'bitcoin-gold']
         elif exchange_type == 'Bitfinex':
-            coins = ['BTC', 'BCH', 'ETH', 'ETC', 'ZEC', 'LTC', 'MIOTA', 'USDT', 'XMR', 'XRP', 'DASH', 'EOS', 'NEO', 'QTUM', 'BTG']
+            coins = ['bitcoin', 'bitcoin-cash', 'ethereum', 'ethereum-classic', 'zcash', 'litecoin', 'iota', 'tether', 'monero', 'ripple', 'dash', 'eos', 'neo', 'qtum', 'bitcoin-gold']
         elif exchange_type == 'Bithumb':
-            coins = ['BTC', 'ETH', 'DASH', 'LTC', 'ETC', 'XRP', 'BCH', 'XMR', 'ZEC', 'QTUM', 'BTG', 'EOS']    
+            coins = ['bitcoin', 'ethereum', 'dash', 'litecoin', 'ethereum-classic', 'ripple', 'bitcoin-cash', 'monero', 'zcash', 'qtum', 'bitcoin-gold', 'eos']    
             
         speech = "Prices for " + exchange_type
     
