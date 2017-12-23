@@ -41,8 +41,8 @@ def menu(req):
     result = req.get("result")
     parameters = result.get("parameters")
     
-    var textResponse = response.result.fulfillment.speech;
-    textResponse = textResponse.replace(/\\n/g, '\n');
+    var textResponse = response.result.fulfillment.speech
+    textResponse = textResponse.replace(/\\n/g, '\n')
     
     speech = "Currently the supported GDAX, bitfinex, korbit, coinone, bithumb \n /gimp (coin이름): 한국과 bitfinex의 프리미엄 계산 \n /(exchange) (coin이름): 특정 exchange의 코인 가격 알려줌"
     res = {
