@@ -30,12 +30,51 @@ def webhook():
         res = convertQuery(req)
     elif req.get("result").get("action") == "help_menu":
         res = menu(req)
+    elif req.get("result").get("action") == "portfolio_private":
+        res = index_private(req)
 
     res = json.dumps(res, indent=4)
 
     r = make_response(res)
     r.headers['Content-Type'] = 'application/json'
     return r
+
+def index_private(req):
+    result = req.get("result")
+    parameters = result.get("parameters")
+    name_portfolio = parameters.get("coinbang_name")
+    
+    if name_portfolio == 'Edward':
+        coins = ['bitcoin', 'ethereum', 'bitcoin-cash', 'stellar', 'dash', 'omisego', 'litecoin', 'kin', 'steem']
+    elif name_portfolio == 'Edward':
+        coins = ['litecoin', 'omisego', 'nem', 'dash', 'stellar', 'cardano', 'bitcoin', 'ripple', 'bitcoin-cash', 'qtum']
+    elif name_portfolio == 'Edward':
+        coins = ['ripple', 'ripple', 'ripple']
+    
+    portfolio_string = "Portfolio for" + name_portfolio
+    
+    for coin in coins
+        portfolio_string = portfolio_string + "/n"
+        
+        cmc = coinmarketcapParameters(coin_type)
+
+        #define coin market cap parameters 
+        coin_name = str(cmc['name'])
+        coin_price = str(cmc['price_usd'])
+        coin_symbol = str(cmc['symbol'])
+        portfolio_string = coin_name + "(" + coin_symbol + "): " + coin_price + " USD"
+    
+    speech = portfolio_string
+    
+    res = {
+        "speech": speech,
+        "displayText": speech,
+        "data": {},
+        "contextOut": [],
+        "source": "coin_market_cap"
+    }
+
+    return res
 
 def menu(req):
     result = req.get("result")
