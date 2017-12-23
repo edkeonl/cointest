@@ -46,14 +46,14 @@ def index_private(req):
     
     if name_portfolio == 'Edward':
         coins = ['bitcoin', 'ethereum', 'bitcoin-cash', 'stellar', 'dash', 'omisego', 'litecoin', 'kin', 'steem']
-    elif name_portfolio == 'Edward':
+    elif name_portfolio == 'Bongju':
         coins = ['litecoin', 'omisego', 'nem', 'dash', 'stellar', 'cardano', 'bitcoin', 'ripple', 'bitcoin-cash', 'qtum']
-    elif name_portfolio == 'Edward':
+    elif name_portfolio == 'Sungwook':
         coins = ['ripple', 'ripple', 'ripple']
     
     portfolio_string = "Portfolio for " + name_portfolio
     
-    for coin in coins
+    for coin in coins:
         portfolio_string = portfolio_string + " /n"
         
         cmc = coinmarketcapParameters(coin)
