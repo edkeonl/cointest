@@ -28,12 +28,32 @@ def webhook():
         res = arbitrageQuery(req)
     elif req.get("result").get("action") == "currency_convert":    
         res = convertQuery(req)
+    elif req.get("result").get("action") == "help_menu":
+        res = menu(req)
 
     res = json.dumps(res, indent=4)
 
     r = make_response(res)
     r.headers['Content-Type'] = 'application/json'
     return r
+
+def menu(req):
+    result = req.get("result")
+    parameters = result.get("parameters")
+    
+    var textResponse = response.result.fulfillment.speech;
+    textResponse = textResponse.replace(/\\n/g, '\n');
+    
+    speech = "Currently the supported GDAX, bitfinex, korbit, coinone, bithumb \n /gimp (coin이름): 한국과 bitfinex의 프리미엄 계산 \n /(exchange) (coin이름): 특정 exchange의 코인 가격 알려줌"
+    res = {
+        "speech": speech,
+        "displayText": speech,
+        "data": {},
+        "contextOut": [],
+        "source": "coin_market_cap"
+    }
+
+    return res
 
 def makeCoinQuery(req):
     result = req.get("result")
@@ -262,7 +282,7 @@ def convertQuery(req):
     #float(price), b_currency, a_currency)
     
     
-    speech = b_currency + " is approximately equal to xxx" + a_currency
+    speech = " is approximately equal to xxx"
     
     res = {
         "speech": speech,
