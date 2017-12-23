@@ -60,9 +60,11 @@ def index_private(req):
 
         #define coin market cap parameters 
         coin_name = str(cmc['name'])
-        coin_price = str(cmc['price_usd'])
+        coin_price = str("%.2f" %(float(cmc['price_usd'])))
         coin_symbol = str(cmc['symbol'])
-        portfolio_string = portfolio_string + coin_name + "(" + coin_symbol + "): " + coin_price + " USD"
+        coin_percent = str(cmc['percent_change_1h'])
+        
+        portfolio_string = portfolio_string + coin_name + "(" + coin_symbol + "): " + coin_price + " USD [" + coin_percent + "(1 hr)]"
     
     speech = portfolio_string
     
