@@ -51,12 +51,12 @@ def index_private(req):
     elif name_portfolio == 'Edward':
         coins = ['ripple', 'ripple', 'ripple']
     
-    portfolio_string = "Portfolio for" + name_portfolio
+    portfolio_string = "Portfolio for " + name_portfolio
     
     for coin in coins
-        portfolio_string = portfolio_string + "/n"
+        portfolio_string = portfolio_string + " /n"
         
-        cmc = coinmarketcapParameters(coin_type)
+        cmc = coinmarketcapParameters(coin)
 
         #define coin market cap parameters 
         coin_name = str(cmc['name'])
