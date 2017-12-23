@@ -62,7 +62,7 @@ def index_private(req):
         coin_name = str(cmc['name'])
         coin_price = str(cmc['price_usd'])
         coin_symbol = str(cmc['symbol'])
-        portfolio_string = coin_name + "(" + coin_symbol + "): " + coin_price + " USD"
+        portfolio_string = portfolio_string + coin_name + "(" + coin_symbol + "): " + coin_price + " USD"
     
     speech = portfolio_string
     
