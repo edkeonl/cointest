@@ -292,6 +292,10 @@ def exchangeQuery(req):
             gx = GDAXParameters(coin_symbol)
             GDAX_price = gx['price']
             speech = coin_name + " is  $" + GDAX_price + " at " + exchange_type
+        elif exchange_type == "Coincheck"
+            cc = coincheckParameters(coin_symbol)
+            coincheck_price = cc['last']
+            speech = coin_name + " is  $" + coincheck_price + " at " + exchange_type
             
     #define coin market cap parameters 
     
@@ -503,7 +507,22 @@ def GDAXParameters(type):
         }
     return res
 
-
+def coincheckParameters(type):
+    coincheck_price_t_url = "https://coincheck.com/api/ticker"
+    coincheck_price_url = urllib.request.urlopen(coincheck_price_t_url).read()
+    coincheck_price_data = json.loads(coincheck_price_url)
+    
+    res = {
+        "last": coincheck_price_data['last'],
+        "bid": coincheck_price_data['bid'],
+        "ask": coincheck_price_data['ask'],
+        "high": coincheck_price_data['high'],
+        "low": coincheck_price_data['low'],
+        "volume": coincheck_price_data['volume']
+        }
+    return res
+    
+    
 def CurrencyConverter(price, from_currency, to_currency):
 
     currency_b_url = 'https://api.fixer.io/latest?base='
