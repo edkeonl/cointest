@@ -293,7 +293,7 @@ def exchangeQuery(req):
             GDAX_price = gx['price']
             speech = coin_name + " is  $" + GDAX_price + " at " + exchange_type
         elif exchange_type == "Coincheck":
-            cc = coincheckParameters(coin_symbol)
+            cc = coincheckParameters()
             coincheck_price = cc['last']
             speech = coin_name + " is  $" + coincheck_price + " at " + exchange_type
             
@@ -507,7 +507,7 @@ def GDAXParameters(type):
         }
     return res
 
-def coincheckParameters(type):
+def coincheckParameters():
     coincheck_price_t_url = "https://coincheck.com/api/ticker"
     coincheck_price_url = urllib.request.urlopen(coincheck_price_t_url).read()
     coincheck_price_data = json.loads(coincheck_price_url)
