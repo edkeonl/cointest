@@ -292,7 +292,7 @@ def exchangeQuery(req):
             gx = GDAXParameters(coin_symbol)
             GDAX_price = gx['price']
             speech = coin_name + " is  $" + GDAX_price + " at " + exchange_type
-        elif exchange_type == "Coincheck"
+        elif exchange_type == "Coincheck":
             cc = coincheckParameters(coin_symbol)
             coincheck_price = cc['last']
             speech = coin_name + " is  $" + coincheck_price + " at " + exchange_type
