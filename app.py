@@ -50,6 +50,8 @@ def index_private(req):
         coins = ['litecoin', 'omisego', 'nem', 'dash', 'stellar', 'cardano', 'bitcoin', 'ripple', 'bitcoin-cash', 'qtum']
     elif name_portfolio == 'Sungwook':
         coins = ['bitcoin', 'litecoin', 'ripple', 'ethereum', 'stellar', 'bitcoin-gold', 'omisego']
+    elif name_portfolio == 'Junghoon':
+        coins = ['bitcoin', 'ethereum', 'stellar', 'omisego', 'ethereum-classic']
     
     portfolio_string = "Portfolio for " + name_portfolio
     
