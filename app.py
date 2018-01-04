@@ -70,7 +70,7 @@ def index_private(req):
         coin_percent1h = str(cmc['percent_change_1h'])
         coin_percent24h = str(cmc['percent_change_24h']) 
         coin_percent7d = str(cmc['percent_change_7d'])
-        portfolio_string = portfolio_string + coin_name + "(" + coin_symbol + "): " + coin_price + " USD" + " \n " + "[" + coin_percent1h + "% (1 hr)]" + "[" + coin_percent24h + "% (24 hrs)]" + "[" + coin_percent7d + "% (7 days)]"
+        portfolio_string = portfolio_string + coin_name + "(" + coin_symbol + "): " + coin_price + " USD" + " \n " + "[" + coin_percent1h + "% (1 hr)]" + "  [" + coin_percent24h + "% (24 hrs)]" + "  [" + coin_percent7d + "% (7 days)]" + " \n "
     
     speech = portfolio_string
     
