@@ -53,7 +53,7 @@ def index_private(req):
     elif name_portfolio == 'Junghoon':
         coins = ['bitcoin', 'ethereum', 'stellar', 'omisego', 'ethereum-classic']
     elif name_portfolio == 'AgressivePort':
-        coins = ['kin', 'kyber-network', 'gifto', 'storm', 'wax', 'simple-token']
+        coins = ['kin', 'kyber-network', 'gifto', 'storm', 'wax', 'simple-token', 'centra', 'tron']
     
     portfolio_string = "Portfolio for " + name_portfolio
     
@@ -66,9 +66,11 @@ def index_private(req):
         coin_name = str(cmc['name'])
         coin_price = str(cmc['price_usd'])
         coin_symbol = str(cmc['symbol'])
-        coin_percent = str(cmc['percent_change_7d'])
-        
-        portfolio_string = portfolio_string + coin_name + "(" + coin_symbol + "): " + coin_price + " USD           [" + coin_percent + "(in 7days)]"
+
+        coin_percent1h = str(cmc['percent_change_1h'])
+        coin_percent24h = str(cmc['percent_change_24h']) 
+        coin_percent7d = str(cmc['percent_change_7d'])
+        portfolio_string = portfolio_string + coin_name + "(" + coin_symbol + "): " + coin_price + " USD" + " \n " + "[" + coin_percent1h + "% (1 hr)]" + "[" + coin_percent24h + "% (24 hrs)]" + "[" + coin_percent7d + "% (7 days)]"
     
     speech = portfolio_string
     
